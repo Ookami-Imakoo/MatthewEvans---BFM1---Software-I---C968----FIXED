@@ -153,10 +153,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
                     MessageBox.Show("Error");
                 }
             }
-            //else
-            //{
-            //    MessageBox.Show("Please check that all fields are filled out correctly before submitting");
-            //}
             
         }
 
