@@ -13,14 +13,17 @@ namespace MatthewEvans___BFM1___Software_I___C968
 {
     public partial class productScreen : Form
     {
-        //initialization of Inventory and Product
+        //initializations//
         Inventory inventory = new Inventory();
         Product myProduct = new Product();
-        Product importedProduct = new Product();
+        //////////////////
 
-        int addedParts = 0;
+        Product modifyProduct = new Product(); //used to store the product to be modifed
 
 
+        /// <summary>
+        /// Defult Constructor for Product Screen: Used when creating a new product
+        /// </summary>
         public productScreen()
         {
             InitializeComponent();
@@ -28,9 +31,13 @@ namespace MatthewEvans___BFM1___Software_I___C968
             //sets up screen
             addProductSetup();
 
-            idValue.Text = inventory.productIDGenerator().ToString();
+            idValue.Text = inventory.productIDGenerator().ToString(); //generates a unique idValue for new Products and sets it in textbox
         }
 
+        /// <summary>
+        /// Constructor used when modifying a product.
+        /// </summary>
+        /// <param name="product"> Product to be modifed -- passed in from MainScreen productsModifyButton_Click</param>
         public productScreen(Product product)
         {
             InitializeComponent();
@@ -38,21 +45,40 @@ namespace MatthewEvans___BFM1___Software_I___C968
             //sets up screen
             addProductSetup();
 
-            importedProduct = product;
+            modifyProduct = product; //setting modifyProduct to the product used in constructor
 
-            //sets data from the passed in inhouse object
-            idValue.Text = importedProduct.ProductID.ToString();
-            nameValue.Text = importedProduct.Name.ToString();
-            inventoryValue.Text = importedProduct.InStock.ToString();
-            priceCostValue.Text = importedProduct.Price.ToString();
-            maxValue.Text = importedProduct.Max.ToString();
-            minValue.Text = importedProduct.Min.ToString();
-            partsAssociatedDataGridView.DataSource = importedProduct.AssociatedParts;
+            //sets data from the passed in modifyProduct object
+            idValue.Text = modifyProduct.ProductID.ToString();
+            nameValue.Text = modifyProduct.Name.ToString();
+            inventoryValue.Text = modifyProduct.InStock.ToString();
+            priceCostValue.Text = modifyProduct.Price.ToString();
+            maxValue.Text = modifyProduct.Max.ToString();
+            minValue.Text = modifyProduct.Min.ToString();
+            partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts;
         }
 
         ////////////////
         /// Buttons ///
         ///////////////
+
+        
+        //
+
+        private void allCandidateAddButton_Click(object sender, EventArgs e)
+        {
+            Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object
+
+            if (modifyProduct.AssociatedParts == null) //checks to see if we are NOT modifying an existing entry
+            {
+                myProduct.addAssociatedPart(part); //adds part object to Associated Parts List
+                partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts; //displays AssociatedParts list of new product
+            }
+            else
+            {
+                modifyProduct.addAssociatedPart(part); //adds part object to Associated Parts List of modifiedProduct
+                partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts; //displays AssociatedParts list of modified product
+            }
+        }
 
         //created a product adding it to the 
         private void productSaveButton_Click(object sender, EventArgs e)
@@ -89,23 +115,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
             //}
         }
 
-        //adds Part to AssociatedParts list
-        private void allCandidateAddButton_Click(object sender, EventArgs e)
-        {
-            Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object
-
-            if (importedProduct.AssociatedParts == null)
-            {
-                myProduct.addAssociatedPart(part); //adds part object to Associated Parts List
-                partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts;
-            }
-            else
-            {
-                importedProduct.addAssociatedPart(part);
-                partsAssociatedDataGridView.DataSource = importedProduct.AssociatedParts;
-                addedParts++;
-            } 
-        }
+        
 
         //Form settings
         private void addProductSetup()
@@ -173,16 +183,10 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //closes add product screen
         private void productCancelButton_Click(object sender, EventArgs e)
         {
-            if(addedParts > 0)
+            if (myProduct.addedPartsCounter > 0)
             {
-                for (int i = 0; i < addedParts; i++)
-                {
-                    int x = importedProduct.AssociatedParts.Count;
-                    int y = importedProduct.AssociatedParts[x - 1].PartID;
-
-                    importedProduct.removeAssoicatedPart(y);
-                }
-                
+                for(int i = 0; i < myProduct.addedPartsCounter; i++)
+                myProduct.removeAssoicatedPart(myProduct.AssociatedParts.Count - 1);
             }
             this.Close();
         }
