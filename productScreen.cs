@@ -37,11 +37,11 @@ namespace MatthewEvans___BFM1___Software_I___C968
         /// <summary>
         /// Constructor used when modifying a product.
         /// </summary>
-        /// <param name="product"> Product to be modifed -- passed in from MainScreen productsModifyButton_Click</param>
+        /// <param name="product"> Product to be modifed -- passed in from MainScreen productsModifyButton_Click </param>
         public productScreen(Product product)
         {
             InitializeComponent();
-
+            
             //sets up screen
             addProductSetup();
 
@@ -56,14 +56,12 @@ namespace MatthewEvans___BFM1___Software_I___C968
             minValue.Text = modifyProduct.Min.ToString();
             partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts;
         }
-
+        
         ////////////////
         /// Buttons ///
         ///////////////
 
-        
-        //
-
+        // ADD - All Candidate Parts Button (Function: adds selected part to AssociatedParts list)
         private void allCandidateAddButton_Click(object sender, EventArgs e)
         {
             Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object
@@ -80,7 +78,27 @@ namespace MatthewEvans___BFM1___Software_I___C968
             }
         }
 
-        //created a product adding it to the 
+        // Delete - AssociatedParts Button (Function: removes parts from the AssociatedParts list, but not from the AllParts list)
+        private void partsAssociatedDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (partsAssociatedDataGridView.CurrentRow == null || !partsAssociatedDataGridView.CurrentRow.Selected) //checks if the associated parts list is null or if no row is currently selected
+            {
+                MessageBox.Show("No Part Selected, please select a part to be deleted."); //returns message if the above logic is true
+                return;
+            }
+            Part part = partsAssociatedDataGridView.CurrentRow.DataBoundItem as Part; //sets part highlighted in AssociatedParts list as part object
+
+            if (modifyProduct.AssociatedParts != null) //checks to see if the part is a modifed part or not
+            {
+                modifyProduct.removeAssoicatedPart(part.PartID); //removes part on the modifyPart.AssociatedParts
+            }
+            else
+            {
+                myProduct.removeAssoicatedPart(part.PartID); //removes part on the myProduct.AssociatedParts
+            }
+        }
+
+        //WORK IN PROGRESS
         private void productSaveButton_Click(object sender, EventArgs e)
         {
             //Product product = new Product
@@ -115,25 +133,18 @@ namespace MatthewEvans___BFM1___Software_I___C968
             //}
         }
 
-        
+        ///////////////
+        //// Misc ////
+        //////////////
 
         //Form settings
         private void addProductSetup()
         {
             allCandidateDataGridView.DataSource = Inventory.AllParts; //sets data for All Candidate Parts DataGrid
-            //partsAssociatedDataGridView.DataSource = Product.AssociatedParts; //sets data for Parts Associated DataGrid
-
             
         }
 
-        //removes parts form the Associated Parts list, but not form the all Candidate list
-        private void partsAssociatedDeleteButton_Click(object sender, EventArgs e)
-        {
-            Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part;
-            int i = part.PartID;
-            myProduct.removeAssoicatedPart(i);
-
-        }
+ 
 
         //clears inital selection on allCadidateDataGridView
         private void allCandidateDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

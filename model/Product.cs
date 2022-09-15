@@ -81,17 +81,29 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
 
         }
 
+        /// <summary>
+        /// Removes part from AssociatedParts list
+        /// </summary>
+        /// <param name="x"> PartID of the part to be removed </param>
+        /// <returns></returns>
         public bool removeAssoicatedPart(int x)
         {
-           for(int i = 0; i < AssociatedParts.Count; i++)
+           for(int i = 0; i < AssociatedParts.Count; i++) //loops though all parts in AssociatedParts list
             {
-                if (x == AssociatedParts[i].PartID)
+                if (AssociatedParts[i].PartID == x) //checks to see if the PartID of the Associated Part in the list matches the PartID parameter
                 {
-                    AssociatedParts.RemoveAt(i);
-                return true;
+                    if(AssociatedParts.Count == 1) //if above logic is true then it checks to see if there is only one entry in the AssociatedParts list
+                    {
+                        AssociatedParts.Clear(); //if its the last part in the list, then the list is cleared
+                    }
+                    else
+                    {
+                        AssociatedParts.Remove(AssociatedParts[i]); //otherwise AssociatedPart is removed
+                    }     
+                return true; //retuning true if part was removed
                 }
             }
-            return false;
+            return false; //returning flase if part was not removed
         
         }
 
