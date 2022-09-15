@@ -32,7 +32,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
             MainScreenSetup();
 
             //sets up sampel data for debug
-            SetupSampelData();
+            SetupSampleData();
         }
 
         //clears the autoselection of rows
@@ -180,24 +180,35 @@ namespace MatthewEvans___BFM1___Software_I___C968
         }
 
         //Sample Data
-        private void SetupSampelData()
+        private void SetupSampleData()
         {
-            if (setupData < 1)
+            if (setupData < 1) // if SetupSample has not yet run, it will run
             {
                 //Part Sample Data
                 Inhouse rearWeightBracket = new Inhouse(1, "Rear Weight Bracket", 67.41m, 1, 1, 20, 8675309);
-                inventory.addPart(rearWeightBracket);
                 Inhouse magneticHitchPin = new Inhouse(2, "Magnetic Hitch Pin", 18.99m, 5, 1, 10, 8675309);
-                inventory.addPart(magneticHitchPin);
                 Inhouse storageCompartmentCover = new Inhouse(3, "Strorage Compartment Cover", 7.46m, 10, 10, 99, 8675309);
+                Inhouse pushToConnect = new Inhouse(4, "3/4 in. Push-to-Connect Brass Ball Valve", 26.97m, 22, 5, 100, 8675309);
+                Inhouse brassFlangedSillcockValve = new Inhouse(5, "1/2 in. FIP x MHT Brass Flanged Sillcock Valve", 7.78m, 11, 5, 100, 8675309);
+                Outsourced rearWeightBracket2 = new Outsourced(6, "Rear Weight Bracket", 67.41m, 1, 1, 20, "Sanford and Sons");
+                Outsourced magneticHitchPin2 = new Outsourced(7, "Magnetic Hitch Pin", 18.99m, 5, 1, 10, "John Deer");
+                Outsourced storageCompartmentCover2 = new Outsourced(8, "Strorage Compartment Cover", 7.46m, 10, 10, 99, "John Deer");
+                Outsourced pushToConnect2 = new Outsourced(9, "3/4 in. Push-to-Connect Brass Ball Valve", 26.97m, 22, 5, 100, "Yamaha");
+                Outsourced brassFlangedSillcockValve2 = new Outsourced(10, "1/2 in. FIP x MHT Brass Flanged Sillcock Valve", 7.78m, 11, 5, 100, "Yamaha");
+
+
+                //adding sample parts to AllParts list
+                inventory.addPart(rearWeightBracket);
+                inventory.addPart(magneticHitchPin);
                 inventory.addPart(storageCompartmentCover);
-                inventory.addPart(new Inhouse(4, "3/4 in. Push-to-Connect Brass Ball Valve", 26.97m, 22, 5, 100, 8675309));
-                inventory.addPart(new Inhouse(5, "1/2 in. FIP x MHT Bras Flanged Sillcock Valve", 7.78m, 11, 5, 100, 8675309));
-                inventory.addPart(new Outsourced(6, "Rear Weight Bracket", 67.41m, 1, 1, 20, "Sanford and Sons"));
-                inventory.addPart(new Outsourced(7, "Magnetic Hitch Pin", 18.99m, 5, 1, 10, "John Deer"));
-                inventory.addPart(new Outsourced(8, "Strorage Compartment Cover", 7.46m, 10, 10, 99, "John Deer"));
-                inventory.addPart(new Outsourced(9, "3/4 in. Push-to-Connect Brass Ball Valve", 26.97m, 22, 5, 100, "Yamaha"));
-                inventory.addPart(new Outsourced(10, "1/2 in. FIP x MHT Bras Flanged Sillcock Valve", 7.78m, 11, 5, 100, "Yamaha"));
+                inventory.addPart(pushToConnect);
+                inventory.addPart (brassFlangedSillcockValve);
+                inventory.addPart(rearWeightBracket2);
+                inventory.addPart(magneticHitchPin2);
+                inventory.addPart(storageCompartmentCover2);
+                inventory.addPart(pushToConnect2);
+                inventory.addPart(brassFlangedSillcockValve2);
+
 
                 //Product Sample Data
                 BindingList<Part> ridingLawnmowerParts = new BindingList<Part>();
@@ -206,11 +217,15 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 ridingLawnmowerParts.Add(storageCompartmentCover);
                 inventory.addProduct(new Product(1, "Riding Lawnmower", 6.99m, 2, 1, 10, ridingLawnmowerParts));
 
+                BindingList<Part> tankWaterHeater = new BindingList<Part>();
+                tankWaterHeater.Add(pushToConnect);
+                tankWaterHeater.Add(pushToConnect2);
+                inventory.addProduct(new Product(2, "40 Gal. 36,000 BTU Tank Water Heater", 519.00m, 2, 0, 2, tankWaterHeater));
 
-                inventory.addProduct(new Product(2, "40 Gal. 36,000 BTU Tank Water Heater", 519.00m, 2, 0, 2));
+                //Product with no initial AssociatedParts list
                 inventory.addProduct(new Product(3, "Colorado 5-Light Black Modern Farmhouse Rectangular Chandelier", 353.00m, 0, 0, 5));
 
-                setupData++;
+                setupData++; // used for logic to only set sample data once
             }
             
         }
