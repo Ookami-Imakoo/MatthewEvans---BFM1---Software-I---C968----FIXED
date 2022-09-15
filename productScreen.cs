@@ -16,6 +16,10 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //initialization of Inventory and Product
         Inventory inventory = new Inventory();
         Product myProduct = new Product();
+        Product importedProduct = new Product();
+
+        int addedParts = 0;
+
 
         public productScreen()
         {
@@ -27,19 +31,23 @@ namespace MatthewEvans___BFM1___Software_I___C968
             idValue.Text = inventory.productIDGenerator().ToString();
         }
 
-        public productScreen(Product selectedProduct)
+        public productScreen(Product product)
         {
-            productScreen modifyProduct = new productScreen();
+            InitializeComponent();
+
+            //sets up screen
+            addProductSetup();
+
+            importedProduct = product;
 
             //sets data from the passed in inhouse object
-            modifyProduct.idValue.Text = selectedProduct.ProductID.ToString();
-            modifyProduct.nameValue.Text = selectedProduct.Name.ToString();
-            modifyProduct.inventoryValue.Text = selectedProduct.InStock.ToString();
-            modifyProduct.priceCostValue.Text = selectedProduct.Price.ToString();
-            modifyProduct.maxValue.Text = selectedProduct.Max.ToString();
-            modifyProduct.minValue.Text = selectedProduct.Min.ToString();
-
-            modifyProduct.Show();
+            idValue.Text = importedProduct.ProductID.ToString();
+            nameValue.Text = importedProduct.Name.ToString();
+            inventoryValue.Text = importedProduct.InStock.ToString();
+            priceCostValue.Text = importedProduct.Price.ToString();
+            maxValue.Text = importedProduct.Max.ToString();
+            minValue.Text = importedProduct.Min.ToString();
+            partsAssociatedDataGridView.DataSource = importedProduct.AssociatedParts;
         }
 
         ////////////////
@@ -49,50 +57,61 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //created a product adding it to the 
         private void productSaveButton_Click(object sender, EventArgs e)
         {
-            Product product = new Product
-            {
-                ProductID = int.Parse(idValue.Text),
-                Name = nameValue.Text,
-                InStock = int.Parse(inventoryValue.Text),
-                Price = decimal.Parse(priceCostValue.Text),
-                Max = int.Parse(maxValue.Text),
-                Min = int.Parse(minValue.Text),
-                AssociatredParts = myProduct.AssociatredParts
-            };
+            //Product product = new Product
+            //{
+            //    ProductID = int.Parse(idValue.Text),
+            //    Name = nameValue.Text,
+            //    InStock = int.Parse(inventoryValue.Text),
+            //    Price = decimal.Parse(priceCostValue.Text),
+            //    Max = int.Parse(maxValue.Text),
+            //    Min = int.Parse(minValue.Text),
+            //    AssociatedParts = partsAssociatedDataGridView.DataSource as BindingList<Part>
+            //};
 
-            //invetoryLogicSwitch(product);
+            ////invetoryLogicSwitch(product);
 
-            if (inventoryLogic(product) == 1)
-            {
-                inventory.addProduct(product);
-                this.Close();
-            }
-            else if (inventoryLogic(product) == 2)
-            {
-                MessageBox.Show("Inventory Below Min Values");
-            }
-            else if (inventoryLogic(product) == 3)
-            {
-                MessageBox.Show("Inventory Above Max Values");
-            }
-            else
-            {
-                MessageBox.Show("Error");
-            }
+            //if (inventoryLogic(product) == 1)
+            //{
+            //    inventory.addProduct(product);
+            //    this.Close();
+            //}
+            //else if (inventoryLogic(product) == 2)
+            //{
+            //    MessageBox.Show("Inventory Below Min Values");
+            //}
+            //else if (inventoryLogic(product) == 3)
+            //{
+            //    MessageBox.Show("Inventory Above Max Values");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Error");
+            //}
         }
 
         //adds Part to AssociatedParts list
         private void allCandidateAddButton_Click(object sender, EventArgs e)
         {
-            Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object 
-            myProduct.AssociatedParts.Add(part); //adds part object to Associated Parts List
+            Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object
+
+            if (importedProduct.AssociatedParts == null)
+            {
+                myProduct.addAssociatedPart(part); //adds part object to Associated Parts List
+                partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts;
+            }
+            else
+            {
+                importedProduct.addAssociatedPart(part);
+                partsAssociatedDataGridView.DataSource = importedProduct.AssociatedParts;
+                addedParts++;
+            } 
         }
 
         //Form settings
         private void addProductSetup()
         {
             allCandidateDataGridView.DataSource = Inventory.AllParts; //sets data for All Candidate Parts DataGrid
-            partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts; //sets data for Parts Associated DataGrid
+            //partsAssociatedDataGridView.DataSource = Product.AssociatedParts; //sets data for Parts Associated DataGrid
 
             
         }
@@ -154,6 +173,17 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //closes add product screen
         private void productCancelButton_Click(object sender, EventArgs e)
         {
+            if(addedParts > 0)
+            {
+                for (int i = 0; i < addedParts; i++)
+                {
+                    int x = importedProduct.AssociatedParts.Count;
+                    int y = importedProduct.AssociatedParts[x - 1].PartID;
+
+                    importedProduct.removeAssoicatedPart(y);
+                }
+                
+            }
             this.Close();
         }
     }

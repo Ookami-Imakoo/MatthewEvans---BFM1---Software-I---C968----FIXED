@@ -103,7 +103,8 @@ namespace MatthewEvans___BFM1___Software_I___C968
             }
 
             Product selectedProduct = productsDataGridView.CurrentRow.DataBoundItem as Product;
-            productScreen modifyProduct = new productScreen(selectedProduct);
+            productScreen productScreen = new productScreen(selectedProduct);
+            productScreen.Show();
         }
 
         //Products - DELETE Button
@@ -184,9 +185,12 @@ namespace MatthewEvans___BFM1___Software_I___C968
             if (setupData < 1)
             {
                 //Part Sample Data
-                inventory.addPart(new Inhouse(1, "Rear Weight Bracket", 67.41m, 1, 1, 20, 8675309));
-                inventory.addPart(new Inhouse(2, "Magnetic Hitch Pin", 18.99m, 5, 1, 10, 8675309));
-                inventory.addPart(new Inhouse(3, "Strorage Compartment Cover", 7.46m, 10, 10, 99, 8675309));
+                Inhouse rearWeightBracket = new Inhouse(1, "Rear Weight Bracket", 67.41m, 1, 1, 20, 8675309);
+                inventory.addPart(rearWeightBracket);
+                Inhouse magneticHitchPin = new Inhouse(2, "Magnetic Hitch Pin", 18.99m, 5, 1, 10, 8675309);
+                inventory.addPart(magneticHitchPin);
+                Inhouse storageCompartmentCover = new Inhouse(3, "Strorage Compartment Cover", 7.46m, 10, 10, 99, 8675309);
+                inventory.addPart(storageCompartmentCover);
                 inventory.addPart(new Inhouse(4, "3/4 in. Push-to-Connect Brass Ball Valve", 26.97m, 22, 5, 100, 8675309));
                 inventory.addPart(new Inhouse(5, "1/2 in. FIP x MHT Bras Flanged Sillcock Valve", 7.78m, 11, 5, 100, 8675309));
                 inventory.addPart(new Outsourced(6, "Rear Weight Bracket", 67.41m, 1, 1, 20, "Sanford and Sons"));
@@ -196,7 +200,13 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 inventory.addPart(new Outsourced(10, "1/2 in. FIP x MHT Bras Flanged Sillcock Valve", 7.78m, 11, 5, 100, "Yamaha"));
 
                 //Product Sample Data
-                inventory.addProduct(new Product(1, "Riding Lawnmower", 6.99m, 2, 1, 10));
+                BindingList<Part> ridingLawnmowerParts = new BindingList<Part>();
+                ridingLawnmowerParts.Add(rearWeightBracket);
+                ridingLawnmowerParts.Add(magneticHitchPin);
+                ridingLawnmowerParts.Add(storageCompartmentCover);
+                inventory.addProduct(new Product(1, "Riding Lawnmower", 6.99m, 2, 1, 10, ridingLawnmowerParts));
+
+
                 inventory.addProduct(new Product(2, "40 Gal. 36,000 BTU Tank Water Heater", 519.00m, 2, 0, 2));
                 inventory.addProduct(new Product(3, "Colorado 5-Light Black Modern Farmhouse Rectangular Chandelier", 353.00m, 0, 0, 5));
 

@@ -34,7 +34,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
             modifyProduct.maxValue.Text = product.Max.ToString();
             modifyProduct.minValue.Text = product.Min.ToString();
 
-            modifyProduct.partsAssociatedDataGridView.DataSource = product.AssociatredParts;
+            //modifyProduct.partsAssociatedDataGridView.DataSource = Product.AssociatedParts;
 
             for (int i = 0; i < Inventory.Products.Count; i++)
             {
@@ -60,7 +60,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 InStock = Int32.Parse(inventoryValue.Text),
                 Min = Int32.Parse(minValue.Text),
                 Max = Int32.Parse(maxValue.Text),
-                AssociatedParts = myProduct.AssociatedParts
+                //Product.AssociatedParts = product.AssociatedParts
             };
 
             for (int i = 0; i < Inventory.Products.Count; i++)
@@ -78,8 +78,8 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
         private void addProductSetup()
         {
-            allCandidateDataGridView.DataSource = Inventory.AllParts; //sets data for All Candidate Parts DataGrid
-            partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts; //sets data for Parts Associated DataGrid
+            //allCandidateDataGridView.DataSource = Inventory.AllParts; //sets data for All Candidate Parts DataGrid
+            //partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts; //sets data for Parts Associated DataGrid
 
 
         }

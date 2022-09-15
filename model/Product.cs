@@ -17,9 +17,8 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         public int Min { get; set; }
         public int Max { get; set; }
 
-        public BindingList<Part> AssociatredParts { get; set; }
+        public BindingList<Part> AssociatedParts { get; set; }
 
-        public BindingList<Part> AssociatedParts = new BindingList<Part>();
 
         //default constructor
         public Product()
@@ -50,7 +49,11 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
 
         public void addAssociatedPart(Part myPart)
         {
-            AssociatedParts.Add(myPart);
+            if (AssociatedParts == null)
+            {
+                AssociatedParts = new BindingList<Part>();
+            }
+             AssociatedParts.Add(myPart);
 
         }
 
