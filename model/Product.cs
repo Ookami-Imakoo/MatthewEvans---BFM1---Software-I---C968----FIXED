@@ -30,6 +30,7 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         {
 
         }
+ 
 
         /// <summary>
         /// Constroctor for Product Object that has no AssociatedParts list
@@ -56,6 +57,20 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             this.Min = Min;
             this.Max = Max;
             this.AssociatedParts = AssociatedParts;
+        }
+
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        public Product(Product product)
+        {
+            this.ProductID = product.ProductID;
+            this.Name = product.Name;
+            this.Price = product.Price;
+            this.InStock = product.InStock;
+            this.Min = product.Min;
+            this.Max = product.Max;
+            this.AssociatedParts = product.AssociatedParts;
         }
 
         /// <summary>
@@ -138,5 +153,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             
             return false; //returns false if AssociatedParts list is null
         }
+
     }
 }

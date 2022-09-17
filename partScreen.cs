@@ -25,47 +25,16 @@ namespace MatthewEvans___BFM1___Software_I___C968
             idValue.Text = inventory.partIDGenerator().ToString();
         }
 
-        /// <summary>
-        /// Constroctor with an inhouse argument
-        /// </summary>
-        /// <param name="inhouse">argument used to populate modify parts screen</param>
-        public partScreen(Inhouse inhouse)
+        //Constructor called when modifying a part
+        public partScreen(Part part) // takes a part as input (Origin: mainScreen.partsModifyButton_Click)
         {
-            partScreen modifyPart = new partScreen();
+            partScreen modifyPartScreen = new partScreen(); //Inizializeing new Parts Screen
 
-            partsPageSetup(inhouse, modifyPart);
+            partsPageSetup(part, modifyPartScreen); //Function that sets up the Partscreen with data from the passed in part
 
-            //sets data from the passed in inhouse object
-            modifyPart.idValue.Text = inhouse.PartID.ToString();
-            modifyPart.nameValue.Text = inhouse.Name.ToString();
-            modifyPart.inventoryValue.Text = inhouse.InStock.ToString();
-            modifyPart.priceCostValue.Text = inhouse.Price.ToString();
-            modifyPart.maxValue.Text = inhouse.Max.ToString();
-            modifyPart.minValue.Text = inhouse.Min.ToString();
-            modifyPart.machineIDValue.Text = inhouse.MachineID.ToString();
+            modifyPartScreen.Show(); //Displays the screen
 
-            modifyPart.Show();
         }
-
-        public partScreen(Outsourced outsourced)
-        {
-            partScreen modifyPart = new partScreen();
-
-            partsPageSetup(outsourced, modifyPart);
-
-
-            //sets data from the passed in inhouse object
-            modifyPart.idValue.Text = outsourced.PartID.ToString();
-            modifyPart.nameValue.Text = outsourced.Name.ToString();
-            modifyPart.inventoryValue.Text = outsourced.InStock.ToString();
-            modifyPart.priceCostValue.Text = outsourced.Price.ToString();
-            modifyPart.maxValue.Text = outsourced.Max.ToString();
-            modifyPart.minValue.Text = outsourced.Min.ToString();
-            modifyPart.companyNameValue.Text = outsourced.CompanyName.ToString();
-
-            modifyPart.Show();
-        }
-
 
         private void inhouseRadioButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -252,42 +221,53 @@ namespace MatthewEvans___BFM1___Software_I___C968
         }
 
 
-
-
-
-
-        private void partsPageSetup(Part part, partScreen modifyPart)
+        /// <summary>
+        /// Used to set up Parts Page when modifying an existing part
+        /// </summary>
+        /// <param name="part"> Part object to be modified </param>
+        /// <param name="partScreen"> Screen object, used to interact with form elements </param>
+        private void partsPageSetup(Part part, partScreen partScreen)
         {
-            if (part is Inhouse)
+            if (part is Inhouse) //checks to see if the part is Inhouse
             {
                 //sets Inhouse Radio Button to true
-                modifyPart.inhouseRadioButton.Checked = true;
+                partScreen.inhouseRadioButton.Checked = true;
 
                 //shows Machine ID Label/Value and hides Company Name Label/Value
-                modifyPart.machineIDLabel.Show();
-                modifyPart.machineIDValue.Show();
-                modifyPart.modifyPartLabel.Show();
-                modifyPart.companyNameLabel.Hide();
-                modifyPart.companyNameValue.Hide();
-                modifyPart.addPartLabel.Hide();
+                partScreen.machineIDLabel.Show();
+                partScreen.machineIDValue.Show();
+                partScreen.modifyPartLabel.Show();
+                partScreen.companyNameLabel.Hide();
+                partScreen.companyNameValue.Hide();
+                partScreen.addPartLabel.Hide();
+
+                Inhouse inhouse = part as Inhouse; //sets passed in part as an Inhouse object
+                partScreen.machineIDValue.Text = inhouse.MachineID.ToString(); //used that object to pass in MachineID
             }
-            else if (part is Outsourced)
+            else if (part is Outsourced) //checks to see if the part is Outsourced
             {
-                //sets Inhouse Radio Button to true
-                modifyPart.outsourcedRadioButton.Checked = true;
+                //sets Outsourced Radio Button to true
+                partScreen.outsourcedRadioButton.Checked = true;
 
                 //shows Machine ID Label/Value and hides Company Name Label/Value
-                modifyPart.companyNameLabel.Show();
-                modifyPart.companyNameValue.Show();
-                modifyPart.modifyPartLabel.Show();
-                modifyPart.machineIDLabel.Hide();
-                modifyPart.machineIDValue.Hide();
-                modifyPart.addPartLabel.Hide();
+                partScreen.companyNameLabel.Show();
+                partScreen.companyNameValue.Show();
+                partScreen.modifyPartLabel.Show();
+                partScreen.machineIDLabel.Hide();
+                partScreen.machineIDValue.Hide();
+                partScreen.addPartLabel.Hide();
+
+                Outsourced outsourced = part as Outsourced; //sets passed in part as an Outsourced object
+                partScreen.companyNameValue.Text = outsourced.CompanyName.ToString(); //used that object to pass in company name value
             }
-            else
-            {
-                MessageBox.Show("Part not Identified!");
-            }
+
+            //sets remaining data from the passed in part object
+            partScreen.idValue.Text = part.PartID.ToString();
+            partScreen.nameValue.Text = part.Name.ToString();
+            partScreen.inventoryValue.Text = part.InStock.ToString();
+            partScreen.priceCostValue.Text = part.Price.ToString();
+            partScreen.maxValue.Text = part.Max.ToString();
+            partScreen.minValue.Text = part.Min.ToString();
         }
     }
     }

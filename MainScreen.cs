@@ -19,7 +19,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
     {
         //Initialize instance of Inventory class
         Inventory inventory = new Inventory();
-        Product product = new Product();
 
         //Value used to setup data only once
         int setupData = 0; // 0: Setup Test Data || 1: Dont Setup Test Data

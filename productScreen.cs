@@ -21,7 +21,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
         Product modifyProduct = new Product(); //used to store the product to be modifed
 
-
         /// <summary>
         /// Defult Constructor for Product Screen: Used when creating a new product
         /// </summary>
@@ -48,14 +47,15 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
             modifyProduct = product; //setting modifyProduct to the product used in constructor
 
+
             //sets data from the passed in modifyProduct object
             idValue.Text = modifyProduct.ProductID.ToString();
-            nameValue.Text = modifyProduct.Name.ToString();
+            nameValue.Text = 
             inventoryValue.Text = modifyProduct.InStock.ToString();
             priceCostValue.Text = modifyProduct.Price.ToString();
             maxValue.Text = modifyProduct.Max.ToString();
             minValue.Text = modifyProduct.Min.ToString();
-            partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts;
+            partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts; //Setting display to copy of ModifyProduct Associated Parts list.
         }
         
         ////////////////
@@ -66,6 +66,8 @@ namespace MatthewEvans___BFM1___Software_I___C968
         private void allCandidateAddButton_Click(object sender, EventArgs e)
         {
             Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object
+            Product modifyProductCopy = new Product(modifyProduct); //copy
+
 
             if (modifyProduct.AssociatedParts == null) //checks to see if we are NOT modifying an existing entry
             {
@@ -75,13 +77,15 @@ namespace MatthewEvans___BFM1___Software_I___C968
             else
             {
                 modifyProduct.addAssociatedPart(part); //adds part object to Associated Parts List of modifiedProduct
-                partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts; //displays AssociatedParts list of modified product
+                partsAssociatedDataGridView.DataSource = modifyProductCopy.AssociatedParts; //displays AssociatedParts list of modified product
             }
         }
 
         // Delete - AssociatedParts Button (Function: removes parts from the AssociatedParts list, but not from the AllParts list)
         private void partsAssociatedDeleteButton_Click(object sender, EventArgs e)
         {
+            Product modifyProductCopy = new Product(modifyProduct); //copy
+
             if (partsAssociatedDataGridView.CurrentRow == null || !partsAssociatedDataGridView.CurrentRow.Selected) //checks if the associated parts list is null or if no row is currently selected
             {
                 MessageBox.Show("No Part Selected, please select a part to be deleted."); //returns message if the above logic is true
@@ -91,7 +95,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
             if (modifyProduct.AssociatedParts != null) //checks to see if the part is a modifed part or not
             {
-                modifyProduct.removeAssoicatedPart(part.PartID); //removes part on the modifyPart.AssociatedParts
+                modifyProductCopy.removeAssoicatedPart(part.PartID); //removes part on the modifyPart.AssociatedParts
             }
             else
             {
@@ -209,11 +213,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //closes add product screen
         private void productCancelButton_Click(object sender, EventArgs e)
         {
-            if (myProduct.addedPartsCounter > 0)
-            {
-                for(int i = 0; i < myProduct.addedPartsCounter; i++)
-                myProduct.removeAssoicatedPart(myProduct.AssociatedParts.Count - 1);
-            }
+            
             this.Close();
         }
     }
