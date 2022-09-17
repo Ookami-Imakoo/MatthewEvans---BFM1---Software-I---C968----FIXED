@@ -120,20 +120,23 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             return null;
         }
 
+        /// <summary>
+        /// Checks to see if the part in parameter exists in the AssociatedParts list
+        /// </summary>
         public bool checkExistence(Part part)
         {
-            if(AssociatedParts != null)
+            if(AssociatedParts != null) //checks if the AssociatedParts list is null
             {
-                for (int i = 0; i < AssociatedParts.Count; i++)
+                for (int i = 0; i < AssociatedParts.Count; i++) //loop of AssociatedParts list
                 {
-                    if (AssociatedParts[i].PartID == part.PartID)
+                    if (AssociatedParts[i].PartID == part.PartID) //checks if the AssociatedParts PartID match the Parameters PartID
                     {
-                        return true;
+                        return true; //return true if the part exists in AssociatedParts list
                     }
                 }
             }
             
-            return false;
+            return false; //returns false if AssociatedParts list is null
         }
     }
 }

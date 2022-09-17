@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -101,36 +102,50 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //WORK IN PROGRESS
         private void productSaveButton_Click(object sender, EventArgs e)
         {
-            //Product product = new Product
-            //{
-            //    ProductID = int.Parse(idValue.Text),
-            //    Name = nameValue.Text,
-            //    InStock = int.Parse(inventoryValue.Text),
-            //    Price = decimal.Parse(priceCostValue.Text),
-            //    Max = int.Parse(maxValue.Text),
-            //    Min = int.Parse(minValue.Text),
-            //    AssociatedParts = partsAssociatedDataGridView.DataSource as BindingList<Part>
-            //};
+            if (modifyProduct.ProductID == 0) //checks to make sure we are not modifying an existing entry
+            {
+                Product product = new Product
+                {
+                    ProductID = int.Parse(idValue.Text),
+                    Name = nameValue.Text,
+                    InStock = int.Parse(inventoryValue.Text),
+                    Price = decimal.Parse(priceCostValue.Text),
+                    Max = int.Parse(maxValue.Text),
+                    Min = int.Parse(minValue.Text),
+                    AssociatedParts = partsAssociatedDataGridView.DataSource as BindingList<Part>
+                };
 
-            ////invetoryLogicSwitch(product);
+                if (inventoryLogic(product) == 1)
+                {
+                    inventory.addProduct(product);
+                    this.Close();
+                }
+                else if (inventoryLogic(product) == 2)
+                {
+                    MessageBox.Show("Inventory Below Min Values");
+                }
+                else if (inventoryLogic(product) == 3)
+                {
+                    MessageBox.Show("Inventory Above Max Values");
+                }
+                else
+                {
+                    MessageBox.Show("Error");
+                }
+            }
+            else
+            {
+                modifyProduct.ProductID = int.Parse(idValue.Text);
+                modifyProduct.Name = nameValue.Text;
+                modifyProduct.InStock = int.Parse(inventoryValue.Text);
+                modifyProduct.Price = decimal.Parse(priceCostValue.Text);
+                modifyProduct.Max = int.Parse(maxValue.Text);
+                modifyProduct.Min = int.Parse(minValue.Text);
+                
+                this.Close();
+            }
 
-            //if (inventoryLogic(product) == 1)
-            //{
-            //    inventory.addProduct(product);
-            //    this.Close();
-            //}
-            //else if (inventoryLogic(product) == 2)
-            //{
-            //    MessageBox.Show("Inventory Below Min Values");
-            //}
-            //else if (inventoryLogic(product) == 3)
-            //{
-            //    MessageBox.Show("Inventory Above Max Values");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Error");
-            //}
+
         }
 
         ///////////////
