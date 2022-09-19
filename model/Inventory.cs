@@ -52,6 +52,25 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         }
 
         /// <summary>
+        /// Refers to the function that will update a part, by first ittering though the binding list 
+        /// and deleteing the part if found, and replaceing it with the Part provided. </summary>
+        /// <param name="x"> Represents the part number wished to be replaced. </param>
+        /// <param name="myPart"> Represents the part to be placed in the list after the removal of the old data. </param>
+        public void updatePart(int x, Part myPart)
+        {
+            for (int i = 0; i < AllParts.Count; i++)
+            {
+                if(AllParts[i].PartID == x)
+                {
+                    AllParts.Remove(AllParts[i]);
+                    AllParts.Add(myPart);
+                }
+            }
+            
+            
+        }
+
+        /// <summary>
         /// Refers to the function that will iterate though the All Parts list and checks to make sure that
         /// the part entered as a parameter is not the same as the refrence form the list and if it dose match
         /// it will remove it.
@@ -90,34 +109,19 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         /// Refers to the function that will look up a part based on input in the partSearchValue textbox
         /// </summary>
         /// <param name="x"> Refers input from partSearchValue textbox </param>
-        public void lookupPart(int x)
+        public Part lookupPart(int x)
         {
-            int i = 0;
+            int i;
 
-            while (i < AllParts.Count){
-                if (i == AllParts.Count - 1)
+            for (i = 0; i < AllParts.Count; i++)
+            {
+                if (x == AllParts[i].PartID)
                 {
-                    if (x == AllParts[i].PartID)
-                    {
-                        MessageBox.Show($"Part with id: {x} was found.");
-                        return;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"No part with id: {x} was found.");
-                        return;
-                    }
+                    break;
                 }
-                else if (x == AllParts[i].PartID)
-                {
-                    MessageBox.Show($"Part with id: {x} was found.");
-                    return;
-                }
-                else if (x != AllParts[i].PartID)
-                {
-                    i++;
-                } 
             }
+
+            return AllParts[i];
         }
 
         /// <summary>
@@ -224,22 +228,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                 }
             }
         }
-
-        /// <summary>
-        /// Refers to the function that will update a part, by first ittering though the binding list 
-        /// and deleteing the part if found, and replaceing it with the Part provided. </summary>
-        /// <param name="x"> Represents the part number wished to be replaced. </param>
-        /// <param name="myPart"> Represents the part to be placed in the list after the removal of the old data. </param>
-        public void updatePart(int x, Part myPart)
-        {
-            AllParts.RemoveAt(x - 1);
-            AllParts.Add(myPart);
-        }
-
-        //private void addPartNumber(int i)
-        //{
-        //    PartNumbers.Add(AllParts[i].PartID);
-        //}
 
         /// <summary>
         /// Function for generating and setting unique partID's
@@ -349,13 +337,67 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             return part;
         }
 
+
+
+        /// <summary>
+        /// WORK IN PROGRESS
+        /// </summary>
+        /// <returns></returns>
+        public bool inventoryLogic(Part part)
+        {
+            if (minInstockMax(part) == false)
+            {
+                if (minGraterThanInstock(part) == false)
+                {
+                    if (maxLessthanInstock(part) == false)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+
         public bool checkExistence(Part part)
         {
-            for (int i = 0; i < AllParts.Count; i++){
+            for (int i = 0; i < AllParts.Count; i++)
+            {
                 if (AllParts[i].PartID == part.PartID)
                 {
                     return true;
                 }
+            }
+            return false;
+        }
+
+        public bool minInstockMax(Part part)
+        {
+            if (part.Min > part.Max)
+            {
+                MessageBox.Show($"Alright, you need to take a min, because what you enterend made no sence. The Min is grater than the max???? Are you drunk?");
+                return true;
+            }
+            return false;
+        }
+
+        public bool minGraterThanInstock(Part part)
+        {
+            if (part.Min > part.InStock)
+            {
+                MessageBox.Show($"Amount Instock for {part.Name} is less than the allowed Minimum");
+                return true;
+            }
+            return false;
+        }
+
+        public bool maxLessthanInstock(Part part)
+        {
+            if (part.Max < part.InStock)
+            {
+                MessageBox.Show($"Amount Instock for {part.Name} is greater than the allowed Maximum");
+                return true;
             }
             return false;
         }

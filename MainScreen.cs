@@ -127,16 +127,73 @@ namespace MatthewEvans___BFM1___Software_I___C968
         {
             String searchInput = partsSearchValue.Text;
 
-            if(Regex.IsMatch(searchInput, @"^\d+$"))
+            if (Regex.IsMatch(searchInput, @"^\d+$"))
             {
-                inventory.lookupPart(Int32.Parse(searchInput));
+               Part searchedPart = inventory.lookupPart(Int32.Parse(searchInput));
             }
-            else
-            {
-                inventory.lookupPart(searchInput);
-            }
+            //else
+            //{
+            //    Part verifyPart = inventory.lookupPart(searchInput);
 
-        }
+
+
+
+
+                
+
+
+
+                ///*Assigns search textbox value to string variable and uses
+
+                //    * Regex to match any value entered by the user to the data
+
+                //    * in the DataGridView. Clears value when done and highlights
+
+                //    * row that matches. Calls lookupPart to verify that Part exists.*/
+
+
+
+                //string searchValue = partsSearchValue.Text;
+
+
+
+                //foreach (DataGridViewRow row in partsDataGridView.Rows)
+
+                //{
+
+                //    if (searchValue == "")
+
+                //    {
+
+                //        break;
+
+                //    }
+
+                //    else if (Regex.IsMatch(row.Cells[1].Value.ToString(), Regex.Escape(searchValue.ToString()), RegexOptions.IgnoreCase))
+
+                //    {
+
+                //        Part verifyName = Inventory.lookupPart(Int32.Parse(row.Cells[0].Value.ToString()));
+
+                //        Regex.IsMatch((verifyName.Name), Regex.Escape(verifyName.Name), RegexOptions.IgnoreCase);
+
+
+
+                //        row.Selected = true;
+
+                //        PartsGridView2.DefaultCellStyle.SelectionBackColor = Color.Yellow;
+
+                //        PartsGridView2.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+                //        SearchCandPartsBox.Clear();
+
+                //        break;
+
+                //    }
+
+                //}
+
+            }
 
         //Product - Search Button
         //takes input from search text box and returns a message if found or not

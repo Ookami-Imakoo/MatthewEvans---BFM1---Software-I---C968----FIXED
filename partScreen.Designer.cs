@@ -127,7 +127,7 @@
             this.inventoryValue.Name = "inventoryValue";
             this.inventoryValue.Size = new System.Drawing.Size(180, 35);
             this.inventoryValue.TabIndex = 8;
-            this.inventoryValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inventoryValue_KeyPress);
+            this.inventoryValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // inventoryLabel
             // 
@@ -161,7 +161,7 @@
             this.maxValue.Name = "maxValue";
             this.maxValue.Size = new System.Drawing.Size(100, 35);
             this.maxValue.TabIndex = 12;
-            this.maxValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maxValue_KeyPress);
+            this.maxValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // maxLabel
             // 
@@ -178,7 +178,7 @@
             this.machineIDValue.Name = "machineIDValue";
             this.machineIDValue.Size = new System.Drawing.Size(180, 35);
             this.machineIDValue.TabIndex = 14;
-            this.machineIDValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.machineIDValue_KeyPress);
+            this.machineIDValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // machineIDLabel
             // 
@@ -195,7 +195,7 @@
             this.minValue.Name = "minValue";
             this.minValue.Size = new System.Drawing.Size(100, 35);
             this.minValue.TabIndex = 16;
-            this.minValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.minValue_KeyPress);
+            this.minValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // minLabel
             // 
@@ -252,7 +252,7 @@
             this.modifyPartLabel.TabIndex = 21;
             this.modifyPartLabel.Text = "Modify Part";
             // 
-            // addPartScreen
+            // partScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -282,7 +282,7 @@
             this.Controls.Add(this.addPartLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "addPartScreen";
+            this.Name = "partScreen";
             this.Text = "Part";
             this.ResumeLayout(false);
             this.PerformLayout();
