@@ -46,9 +46,9 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         /// Represents a function that adds a Part to the All Parts list.
         /// </summary>
         /// <param name=""> Represents a part to be addded to the All Parts list. </param>
-        public void addPart(Part myPart)
+        public void addPart(Part part)
         {
-            AllParts.Add(myPart);
+            AllParts.Add(part);
         }
 
         /// <summary>
@@ -56,14 +56,14 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         /// and deleteing the part if found, and replaceing it with the Part provided. </summary>
         /// <param name="x"> Represents the part number wished to be replaced. </param>
         /// <param name="myPart"> Represents the part to be placed in the list after the removal of the old data. </param>
-        public void updatePart(int x, Part myPart)
+        public void updatePart(int x, Part part)
         {
             for (int i = 0; i < AllParts.Count; i++)
             {
                 if(AllParts[i].PartID == x)
                 {
                     AllParts.Remove(AllParts[i]);
-                    AllParts.Add(myPart);
+                    AllParts.Add(part);
                 }
             }
             

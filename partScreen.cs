@@ -38,12 +38,11 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
         }
 
-        
 
         ////////////////
         /// Buttons ///
         ///////////////
-        
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             inventoryLogicTest();
@@ -51,14 +50,9 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
         //closes Add Part screen
         private void cancelButton_Click(object sender, EventArgs e)
-    {
+        {
             this.Close();
         }
-
-
-
-
-
 
 
         ////////////////
@@ -131,86 +125,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //// Misc. ////
         ///////////////
 
-        ///// <summary>
-        ///// Inventory Logic Orginal
-        ///// </summary>
-        ///// <param name="part"></param>
-        ///// <returns></returns>
-        //private int inventoryLogic(Part part)
-        //{
-        //    if (inventory.checkExistence(part) == true)
-        //    {
-        //        return 1;
-        //    }
-        //    else if (part.InStock <= part.Max && part.InStock >= part.Min)
-        //    {
-        //        return 2;
-        //    }
-        //    else if (part.InStock < part.Min)
-        //    {
-        //        return 3;
-        //    }
-        //    else if (part.InStock > part.Max)
-        //    {
-        //        return 4;
-        //    }
-        //    else if (decimal.TryParse(priceCostValue.Text, out decimal parsedValue))
-        //    {
-        //        return 5;
-        //    }
-        //    else if (nameValue.Text == null)
-        //    {
-        //        return 99;
-        //    }
-        //    else
-        //    {
-        //        return 0;
-        //    }
-        //}
-
-        private void inventoryLogicTest()
-        {
-            if (inhouseRadioButton.Checked == true)
-            {
-
-                Inhouse inhouse = new Inhouse(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), Int32.Parse(machineIDValue.Text));
-
-                if (inventory.checkExistence(inhouse) == true)
-                {
-                    if (inventory.inventoryLogic(inhouse) == true)
-                    {
-                        inventory.updatePart(inhouse.PartID, inhouse);
-                        this.Close();
-                    }
-                }
-                else if (inventory.inventoryLogic(inhouse) == true)
-                {
-                    inventory.addPart(inhouse);
-                    this.Close();
-                }
-
-            }
-            else if (outsourcedRadioButton.Checked == true)
-            {
-                Outsourced outsourced = new Outsourced(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), companyNameValue.Text);
-
-                if (inventory.checkExistence(outsourced) == true)
-                {
-                    if (inventory.inventoryLogic(outsourced) == true)
-                    {
-                        inventory.updatePart(outsourced.PartID, outsourced);
-                        this.Close();
-                    }
-                }
-                else if (inventory.inventoryLogic(outsourced) == true)
-                {
-                    inventory.addPart(outsourced);
-                    this.Close();
-                }
-            }
-        }
-
-
         /// <summary>
         /// Defualt page setup for Parts Screen
         /// </summary>
@@ -267,5 +181,125 @@ namespace MatthewEvans___BFM1___Software_I___C968
             modifyPartScreen.maxValue.Text = part.Max.ToString();
             modifyPartScreen.minValue.Text = part.Min.ToString();
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void inventoryLogicTest()
+        {
+            if (inhouseRadioButton.Checked == true)
+            {
+
+                try
+                {
+                    Inhouse inhouse = new Inhouse(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), Int32.Parse(machineIDValue.Text));
+
+                    if (inventory.checkExistence(inhouse) == true)
+                    {
+                        if (inventory.inventoryLogic(inhouse) == true)
+                        {
+                            inventory.updatePart(inhouse.PartID, inhouse);
+                            this.Close();
+                        }
+                    }
+                    else if (inventory.inventoryLogic(inhouse) == true)
+                    {
+                        inventory.addPart(inhouse);
+                        this.Close();
+                    }
+                }
+                catch (Exception)
+                {
+
+                    MessageBox.Show("Shit Happend");
+                }
+
+            }
+            else if (outsourcedRadioButton.Checked == true)
+            {
+                Outsourced outsourced = new Outsourced(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), companyNameValue.Text);
+
+                if (inventory.checkExistence(outsourced) == true)
+                {
+                    if (inventory.inventoryLogic(outsourced) == true)
+                    {
+                        inventory.updatePart(outsourced.PartID, outsourced);
+                        this.Close();
+                    }
+                }
+                else if (inventory.inventoryLogic(outsourced) == true)
+                {
+                    inventory.addPart(outsourced);
+                    this.Close();
+                }
+            }
+        }
+
+        private void EnableSaveButton()
+
+        {
+            if ((nameValue.BackColor == Color.White) && (inventoryValue.BackColor == Color.White)
+                                && (priceCostValue.BackColor == Color.White) && (maxValue.BackColor == Color.White)
+                                && (minValue.BackColor == Color.White) && (companyNameValue.BackColor == Color.White))
+
+            {
+                saveButton.Enabled = true;
+            }
+        }
+
+        private void nameValue_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(nameValue.Text))
+            {
+                nameValue.BackColor = Color.Salmon;
+                saveButton.Enabled = false;
+            }
+            else
+            {
+                nameValue.BackColor = Color.White;
+                EnableSaveButton();
+            }
+        }
+        private void inventoryValue_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(inventoryValue.Text))
+            {
+                nameValue.BackColor = Color.Salmon;
+                saveButton.Enabled = false;
+            }
+            else
+            {
+                nameValue.BackColor = Color.White;
+                EnableSaveButton();
+            }
+        }
+
+        private void companyNameValue_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(nameValue.Text))
+            {
+                nameValue.BackColor = Color.Salmon;
+                saveButton.Enabled = false;
+            }
+            else
+            {
+                nameValue.BackColor = Color.White;
+                EnableSaveButton();
+            }
+        }
+
+
+        private void dontHaveAGoodName()
+        {
+            List<string> textBoxes = new List<string> { nameValue, inventoryValue, priceCostValue, maxValue, minValue, companyNameValue };
+
+            for (int i = 0; i < textBoxes.Count; i++)
+            {
+                if(textBoxes[i].Text == )
+            }
+        }
+
+   
     }
 }

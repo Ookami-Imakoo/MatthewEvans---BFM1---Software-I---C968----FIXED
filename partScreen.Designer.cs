@@ -111,6 +111,7 @@
             this.nameValue.Name = "nameValue";
             this.nameValue.Size = new System.Drawing.Size(180, 35);
             this.nameValue.TabIndex = 6;
+            this.nameValue.TextChanged += new System.EventHandler(this.nameValue_TextChanged);
             // 
             // nameLabel
             // 
@@ -127,6 +128,7 @@
             this.inventoryValue.Name = "inventoryValue";
             this.inventoryValue.Size = new System.Drawing.Size(180, 35);
             this.inventoryValue.TabIndex = 8;
+            this.inventoryValue.TextChanged += new System.EventHandler(this.inventoryValue_TextChanged);
             this.inventoryValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // inventoryLabel
@@ -232,6 +234,7 @@
             this.companyNameValue.Name = "companyNameValue";
             this.companyNameValue.Size = new System.Drawing.Size(180, 35);
             this.companyNameValue.TabIndex = 20;
+            this.companyNameValue.TextChanged += new System.EventHandler(this.companyNameValue_TextChanged);
             // 
             // companyNameLabel
             // 
