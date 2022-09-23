@@ -111,9 +111,7 @@
             this.nameValue.Name = "nameValue";
             this.nameValue.Size = new System.Drawing.Size(180, 35);
             this.nameValue.TabIndex = 6;
-            this.nameValue.Leave += new System.EventHandler(this.nameValue_Leave);
             this.nameValue.Validating += new System.ComponentModel.CancelEventHandler(this.nameValue_Validating);
-            this.nameValue.Validated += new System.EventHandler(this.nameValue_Validated);
             // 
             // nameLabel
             // 
