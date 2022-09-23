@@ -177,19 +177,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
             partsAssociatedDataGridView.ClearSelection();
         }
 
-        //private bool inventoryMinMax(Product product)
-        //{
-        //    int inventoryAmount = int.Parse(inventoryValue.Text);
-        //    int maxAmount = int.Parse(maxValue.Text);
-        //    int minAmount = int.Parse(minValue.Text);
-
-        //    if (inventoryAmount <= maxAmount && inventoryAmount >= minAmount)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
         private int inventoryLogic(Product product)
         {
             if (product.InStock <= product.Max && product.InStock >= product.Min)

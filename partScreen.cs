@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -100,26 +101,16 @@ namespace MatthewEvans___BFM1___Software_I___C968
         }
 
         /// <summary>
-        /// WORK IN PROGRESS
+        /// Event for conroling input to only Digits Backspace and '.' - Specificaly for Price/Cost Textbox
         /// </summary>
         private void priceCostValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //char ch = e.KeyChar; //variable "ch" for storing keypress
-            //int i = 1;
+            char ch = e.KeyChar; //variable "ch" for storing keypress
 
-            //if (!Char.IsDigit(ch) && ch != 8) //first checks if "ch" is a digit, then checks to see if the 
-            //{                                //key press was the symbol '.' and finally it checks to see if
-            //    e.Handled = true;           //the key pressed was equal to backspace's enumeration
-            //}
-
-            //while (i == 1)
-            //{
-            //    if (ch != 70)
-            //    {
-            //        e.Handled = true;
-            //        i--;
-            //    }
-            //}
+            if (!Char.IsDigit(ch) && ch != 8 && ch != '.') //first checks if "ch" is a digit, then checks to see if the 
+            {                                              //key press was the symbol '.' and finally it checks to see if
+                e.Handled = true;                          //the key pressed was equal to backspace's enumeration
+            }
         }
 
         ////////////////
@@ -185,117 +176,127 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
 
         /// <summary>
-        /// 
+        /// Method for confirming that the input data form the end user will create a good part before creating the part and adding it to the allparts list
         /// </summary>
         private void inventoryLogicTest()
         {
-            if (inhouseRadioButton.Checked == true)
+            if (inhouseRadioButton.Checked == true) //checks to see if the inhouse radio button is checked or not, indicating the part is to be an inhouse part
             {
 
-                try
+                try //first trys to create the part withe the passed in data from the Parts Screen
                 {
-                    Inhouse inhouse = new Inhouse(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), Int32.Parse(machineIDValue.Text));
+                    Inhouse inhouse = new Inhouse(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), Int32.Parse(machineIDValue.Text)); //initialzes a new part with the data put in by the user
 
-                    if (inventory.checkExistence(inhouse) == true)
+                    if (inventory.checkExistence(inhouse) == true) //checks to see if the part already exists
                     {
-                        if (inventory.inventoryLogic(inhouse) == true)
+                        if (inventory.inventoryLogic(inhouse) == true) //confirms that the part conforms to the classes restrictions
                         {
-                            inventory.updatePart(inhouse.PartID, inhouse);
-                            this.Close();
+                            inventory.updatePart(inhouse.PartID, inhouse); //updates the existing part
+                            this.Close(); //closes part screen
                         }
                     }
-                    else if (inventory.inventoryLogic(inhouse) == true)
+                    else if (inventory.inventoryLogic(inhouse) == true) //confirms that the part conforms to the classes restrictions
                     {
-                        inventory.addPart(inhouse);
-                        this.Close();
+                        inventory.addPart(inhouse); //adds the part to the allparts list
+                        this.Close(); //closes part screen
+                    }
+                }
+                catch (Exception) //if the part would fail completely, and no other error message display (preventing this one) than this error message acts as more of a catch all
+                {
+                    partVerification(); //Method that adds notifications to the part screen to help the user correct input errors
+                    MessageBox.Show("Please check all data was entered correctly and then try again.");
+                }
+
+            }
+            else if (outsourcedRadioButton.Checked == true) //checks to see if the outsourced radio button is checked or not, indicating the part is to be an outsourced part
+            {
+                try
+                {
+                    Outsourced outsourced = new Outsourced(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), companyNameValue.Text); //initialzes a new part with the data put in by the user
+
+                    if (inventory.checkExistence(outsourced) == true) //checks to see if the part already exists
+                    {
+                        if (inventory.inventoryLogic(outsourced) == true) //confirms that the part conforms to the classes restrictions
+                        {
+                            inventory.updatePart(outsourced.PartID, outsourced); //updates the existing part
+                            this.Close(); //closes part screen
+                        }
+                    }
+                    else if (inventory.inventoryLogic(outsourced) == true) //confirms that the part conforms to the classes restrictions
+                    {
+                        inventory.addPart(outsourced); //adds the part to the allparts list
+                        this.Close(); //closes part screen
                     }
                 }
                 catch (Exception)
                 {
 
-                    MessageBox.Show("Shit Happend");
-                }
-
-            }
-            else if (outsourcedRadioButton.Checked == true)
-            {
-                Outsourced outsourced = new Outsourced(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), companyNameValue.Text);
-
-                if (inventory.checkExistence(outsourced) == true)
-                {
-                    if (inventory.inventoryLogic(outsourced) == true)
-                    {
-                        inventory.updatePart(outsourced.PartID, outsourced);
-                        this.Close();
-                    }
-                }
-                else if (inventory.inventoryLogic(outsourced) == true)
-                {
-                    inventory.addPart(outsourced);
-                    this.Close();
+                    partVerification(); //Method that adds notifications to the part screen to help the user correct input errors
+                    MessageBox.Show("Please check all data was entered correctly and then try again.");
                 }
             }
         }
 
-  
-
-        private void nameValue_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Method for validateing part information and returns useful messages to help end user input proper data
+        /// </summary>
+        /// <param name="textbox"> refers to the textbox from which the end users data is passed </param>
+        private void inventoryValidation(TextBox textbox)
         {
-            inventoryNotification(nameValue);
-        }
-
-        private void inventoryValue_TextChanged(object sender, EventArgs e)
-        {
-            inventoryNotification(inventoryValue);
-        }
-
-        private void priceCostValue_TextChanged(object sender, EventArgs e)
-        {
-            inventoryNotification(priceCostValue);
-        }
-
-        private void maxValue_TextChanged(object sender, EventArgs e)
-        {
-            inventoryNotification(maxValue);
-        }
-
-        private void minValue_TextChanged(object sender, EventArgs e)
-        {
-            inventoryNotification(minValue);
-        }
-
-        private void machineIDValue_TextChanged(object sender, EventArgs e)
-        {
-            if (inhouseRadioButton.Checked == true)
-            {
-                inventoryNotification(machineIDValue);
-            }
-            
-        }
-
-        private void companyNameValue_TextChanged(object sender, EventArgs e)
-        {
-            if (outsourcedRadioButton.Checked == true)
-            {
-                inventoryNotification(companyNameValue);
-            }
-        }
-
-
-        private void inventoryNotification(TextBox textbox)
-        {
-            if (string.IsNullOrEmpty(textbox.Text))
+            if (string.IsNullOrEmpty(textbox.Text)) //checks to make sure the textbox is not null
             {
                 textbox.BackColor = Color.Salmon;
                 saveButton.Enabled = false;
+                MessageBox.Show("Please fill out all textboxes.");
+                textbox.Focus();
             }
-            else
+            else if (textbox == priceCostValue) //priceCostValue textbox specific verification
+            {
+                Regex currencyCheck = new Regex(@"\d+\.\d{2}"); //initializing new regex to check for currency format: xxx.xx
+                if (currencyCheck.IsMatch(textbox.Text)) //checks to see if the priceCostValue.Text matches the currency format
+                {
+                    textbox.BackColor = Color.White;
+                    EnableSaveButton();
+                }
+                else //if it dose not match the currecny format
+                {
+                    textbox.BackColor = Color.Salmon;
+                    saveButton.Enabled = false;
+                    MessageBox.Show("Please Check \"Price / Cost\" for format: x.xx");
+                    priceCostValue.Focus();
+                }
+            }
+            else //defualt
             {
                 textbox.BackColor = Color.White;
                 EnableSaveButton();
             }
         }
 
+        /// <summary>
+        /// Method for running verification on all textboxes that make up a complete part
+        /// </summary>
+        private void partVerification()
+        {
+            inventoryValidation(nameValue);
+            inventoryValidation(inventoryValue);
+            inventoryValidation(priceCostValue);
+            inventoryValidation(maxValue);
+            inventoryValidation(minValue);
+
+            if (inhouseRadioButton.Checked == true) //runs only if the part is inhouse
+            {
+                inventoryValidation(machineIDValue);
+            }
+            else if (outsourcedRadioButton.Checked == true) //runs only if the part is outsourced
+            {
+                inventoryValidation(companyNameValue);
+            }
+        }
+
+        /// <summary>
+        /// Method for enableing the save button, but only once all the textboxes have valid data
+        /// </summary>
         private void EnableSaveButton()
 
         {
@@ -305,6 +306,56 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
             {
                 saveButton.Enabled = true;
+            }
+        }
+
+        ////////////////////////////
+        //// Validation Events ////
+        ///////////////////////////
+
+        /// <summary>
+        /// The below events are for validateing texbox input for thier respective textboxes
+        /// </summary>
+    
+
+        private void nameValue_Validating(object sender, CancelEventArgs e)
+        {
+            inventoryValidation(nameValue);
+        }
+
+        private void inventoryValue_Validating(object sender, CancelEventArgs e)
+        {
+            inventoryValidation(inventoryValue);
+        }
+
+        private void priceCostValue_Validating(object sender, CancelEventArgs e)
+        {
+            inventoryValidation(priceCostValue);
+        }
+
+        private void maxValue_Validating(object sender, CancelEventArgs e)
+        {
+            inventoryValidation(maxValue);
+        }
+
+        private void minValue_Validating(object sender, CancelEventArgs e)
+        {
+            inventoryValidation(minValue);
+        }
+
+        private void machineIDValue_Validating(object sender, CancelEventArgs e)
+        {
+            if (inhouseRadioButton.Checked == true)
+            {
+                inventoryValidation(machineIDValue);
+            }
+        }
+
+        private void companyNameValue_Validating(object sender, CancelEventArgs e)
+        {
+            if (outsourcedRadioButton.Checked == true)
+            {
+                inventoryValidation(companyNameValue);
             }
         }
     }

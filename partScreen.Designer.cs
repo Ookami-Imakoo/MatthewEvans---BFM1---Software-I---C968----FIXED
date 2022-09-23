@@ -111,7 +111,9 @@
             this.nameValue.Name = "nameValue";
             this.nameValue.Size = new System.Drawing.Size(180, 35);
             this.nameValue.TabIndex = 6;
-            this.nameValue.TextChanged += new System.EventHandler(this.nameValue_TextChanged);
+            this.nameValue.Leave += new System.EventHandler(this.nameValue_Leave);
+            this.nameValue.Validating += new System.ComponentModel.CancelEventHandler(this.nameValue_Validating);
+            this.nameValue.Validated += new System.EventHandler(this.nameValue_Validated);
             // 
             // nameLabel
             // 
@@ -128,8 +130,8 @@
             this.inventoryValue.Name = "inventoryValue";
             this.inventoryValue.Size = new System.Drawing.Size(180, 35);
             this.inventoryValue.TabIndex = 8;
-            this.inventoryValue.TextChanged += new System.EventHandler(this.inventoryValue_TextChanged);
             this.inventoryValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
+            this.inventoryValue.Validating += new System.ComponentModel.CancelEventHandler(this.inventoryValue_Validating);
             // 
             // inventoryLabel
             // 
@@ -146,8 +148,8 @@
             this.priceCostValue.Name = "priceCostValue";
             this.priceCostValue.Size = new System.Drawing.Size(180, 35);
             this.priceCostValue.TabIndex = 10;
-            this.priceCostValue.TextChanged += new System.EventHandler(this.priceCostValue_TextChanged);
             this.priceCostValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceCostValue_KeyPress);
+            this.priceCostValue.Validating += new System.ComponentModel.CancelEventHandler(this.priceCostValue_Validating);
             // 
             // priceCostLabel
             // 
@@ -164,8 +166,8 @@
             this.maxValue.Name = "maxValue";
             this.maxValue.Size = new System.Drawing.Size(100, 35);
             this.maxValue.TabIndex = 12;
-            this.maxValue.TextChanged += new System.EventHandler(this.maxValue_TextChanged);
             this.maxValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
+            this.maxValue.Validating += new System.ComponentModel.CancelEventHandler(this.maxValue_Validating);
             // 
             // maxLabel
             // 
@@ -182,8 +184,8 @@
             this.machineIDValue.Name = "machineIDValue";
             this.machineIDValue.Size = new System.Drawing.Size(180, 35);
             this.machineIDValue.TabIndex = 14;
-            this.machineIDValue.TextChanged += new System.EventHandler(this.machineIDValue_TextChanged);
             this.machineIDValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
+            this.machineIDValue.Validating += new System.ComponentModel.CancelEventHandler(this.machineIDValue_Validating);
             // 
             // machineIDLabel
             // 
@@ -200,8 +202,8 @@
             this.minValue.Name = "minValue";
             this.minValue.Size = new System.Drawing.Size(100, 35);
             this.minValue.TabIndex = 16;
-            this.minValue.TextChanged += new System.EventHandler(this.minValue_TextChanged);
             this.minValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
+            this.minValue.Validating += new System.ComponentModel.CancelEventHandler(this.minValue_Validating);
             // 
             // minLabel
             // 
@@ -214,6 +216,7 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.CausesValidation = false;
             this.cancelButton.Location = new System.Drawing.Point(431, 455);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(89, 41);
@@ -234,11 +237,11 @@
             // 
             // companyNameValue
             // 
-            this.companyNameValue.Location = new System.Drawing.Point(248, 414);
+            this.companyNameValue.Location = new System.Drawing.Point(245, 392);
             this.companyNameValue.Name = "companyNameValue";
             this.companyNameValue.Size = new System.Drawing.Size(180, 35);
             this.companyNameValue.TabIndex = 20;
-            this.companyNameValue.TextChanged += new System.EventHandler(this.companyNameValue_TextChanged);
+            this.companyNameValue.Validating += new System.ComponentModel.CancelEventHandler(this.companyNameValue_Validating);
             // 
             // companyNameLabel
             // 

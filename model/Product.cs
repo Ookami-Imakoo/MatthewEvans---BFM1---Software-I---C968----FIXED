@@ -154,5 +154,56 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             return false; //returns false if AssociatedParts list is null
         }
 
+        /// <summary>
+        /// WORK IN PROGRESS
+        /// </summary>
+        /// <returns></returns>
+        public bool inventoryLogic(Part part)
+        {
+            if (minInstockMax(part) == false)
+            {
+                if (minGraterThanInstock(part) == false)
+                {
+                    if (maxLessthanInstock(part) == false)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+
+        public bool minInstockMax(Part part)
+        {
+            if (part.Min > part.Max)
+            {
+                MessageBox.Show($"Alright, you need to take a min, because what you enterend made no sence. The Min is grater than the max???? Are you drunk?");
+                return true;
+            }
+            return false;
+        }
+
+        public bool minGraterThanInstock(Part part)
+        {
+            if (part.Min > part.InStock)
+            {
+                MessageBox.Show($"Amount Instock for {part.Name} is less than the allowed Minimum");
+                return true;
+            }
+            return false;
+        }
+
+        public bool maxLessthanInstock(Part part)
+        {
+            if (part.Max < part.InStock)
+            {
+                MessageBox.Show($"Amount Instock for {part.Name} is greater than the allowed Maximum");
+                return true;
+            }
+            return false;
+        }
+
     }
 }
