@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace MatthewEvans___BFM1___Software_I___C968
 {
@@ -236,70 +237,75 @@ namespace MatthewEvans___BFM1___Software_I___C968
             }
         }
 
+  
+
+        private void nameValue_TextChanged(object sender, EventArgs e)
+        {
+            inventoryNotification(nameValue);
+        }
+
+        private void inventoryValue_TextChanged(object sender, EventArgs e)
+        {
+            inventoryNotification(inventoryValue);
+        }
+
+        private void priceCostValue_TextChanged(object sender, EventArgs e)
+        {
+            inventoryNotification(priceCostValue);
+        }
+
+        private void maxValue_TextChanged(object sender, EventArgs e)
+        {
+            inventoryNotification(maxValue);
+        }
+
+        private void minValue_TextChanged(object sender, EventArgs e)
+        {
+            inventoryNotification(minValue);
+        }
+
+        private void machineIDValue_TextChanged(object sender, EventArgs e)
+        {
+            if (inhouseRadioButton.Checked == true)
+            {
+                inventoryNotification(machineIDValue);
+            }
+            
+        }
+
+        private void companyNameValue_TextChanged(object sender, EventArgs e)
+        {
+            if (outsourcedRadioButton.Checked == true)
+            {
+                inventoryNotification(companyNameValue);
+            }
+        }
+
+
+        private void inventoryNotification(TextBox textbox)
+        {
+            if (string.IsNullOrEmpty(textbox.Text))
+            {
+                textbox.BackColor = Color.Salmon;
+                saveButton.Enabled = false;
+            }
+            else
+            {
+                textbox.BackColor = Color.White;
+                EnableSaveButton();
+            }
+        }
+
         private void EnableSaveButton()
 
         {
             if ((nameValue.BackColor == Color.White) && (inventoryValue.BackColor == Color.White)
                                 && (priceCostValue.BackColor == Color.White) && (maxValue.BackColor == Color.White)
-                                && (minValue.BackColor == Color.White) && (companyNameValue.BackColor == Color.White))
+                                && (minValue.BackColor == Color.White) && ((companyNameValue.BackColor == Color.White) || (machineIDValue.BackColor == Color.White)))
 
             {
                 saveButton.Enabled = true;
             }
         }
-
-        private void nameValue_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(nameValue.Text))
-            {
-                nameValue.BackColor = Color.Salmon;
-                saveButton.Enabled = false;
-            }
-            else
-            {
-                nameValue.BackColor = Color.White;
-                EnableSaveButton();
-            }
-        }
-        private void inventoryValue_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(inventoryValue.Text))
-            {
-                nameValue.BackColor = Color.Salmon;
-                saveButton.Enabled = false;
-            }
-            else
-            {
-                nameValue.BackColor = Color.White;
-                EnableSaveButton();
-            }
-        }
-
-        private void companyNameValue_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(nameValue.Text))
-            {
-                nameValue.BackColor = Color.Salmon;
-                saveButton.Enabled = false;
-            }
-            else
-            {
-                nameValue.BackColor = Color.White;
-                EnableSaveButton();
-            }
-        }
-
-
-        private void dontHaveAGoodName()
-        {
-            List<string> textBoxes = new List<string> { nameValue, inventoryValue, priceCostValue, maxValue, minValue, companyNameValue };
-
-            for (int i = 0; i < textBoxes.Count; i++)
-            {
-                if(textBoxes[i].Text == )
-            }
-        }
-
-   
     }
 }

@@ -146,6 +146,7 @@
             this.priceCostValue.Name = "priceCostValue";
             this.priceCostValue.Size = new System.Drawing.Size(180, 35);
             this.priceCostValue.TabIndex = 10;
+            this.priceCostValue.TextChanged += new System.EventHandler(this.priceCostValue_TextChanged);
             this.priceCostValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceCostValue_KeyPress);
             // 
             // priceCostLabel
@@ -163,6 +164,7 @@
             this.maxValue.Name = "maxValue";
             this.maxValue.Size = new System.Drawing.Size(100, 35);
             this.maxValue.TabIndex = 12;
+            this.maxValue.TextChanged += new System.EventHandler(this.maxValue_TextChanged);
             this.maxValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // maxLabel
@@ -180,6 +182,7 @@
             this.machineIDValue.Name = "machineIDValue";
             this.machineIDValue.Size = new System.Drawing.Size(180, 35);
             this.machineIDValue.TabIndex = 14;
+            this.machineIDValue.TextChanged += new System.EventHandler(this.machineIDValue_TextChanged);
             this.machineIDValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // machineIDLabel
@@ -197,6 +200,7 @@
             this.minValue.Name = "minValue";
             this.minValue.Size = new System.Drawing.Size(100, 35);
             this.minValue.TabIndex = 16;
+            this.minValue.TextChanged += new System.EventHandler(this.minValue_TextChanged);
             this.minValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress_DigitBackspace);
             // 
             // minLabel
@@ -230,7 +234,7 @@
             // 
             // companyNameValue
             // 
-            this.companyNameValue.Location = new System.Drawing.Point(245, 392);
+            this.companyNameValue.Location = new System.Drawing.Point(248, 414);
             this.companyNameValue.Name = "companyNameValue";
             this.companyNameValue.Size = new System.Drawing.Size(180, 35);
             this.companyNameValue.TabIndex = 20;
