@@ -14,12 +14,19 @@ namespace MatthewEvans___BFM1___Software_I___C968
 {
     public partial class productScreen : Form
     {
-        //initializations//
-        Inventory inventory = new Inventory();
-        Product myProduct = new Product();
-        //////////////////
-
+        ////////////////////////
+        /// Global Veriables ///
+        ///////////////////////
+        
+        Inventory inventory = new Inventory(); //initialzation of inventory object
+        
         Product modifyProduct = new Product(); //used to store the product to be modifed
+
+        public BindingList<Part> AssociatedPartsCopy = new BindingList<Part>(); //listed used to store associated parts list durring modification
+
+        ////////////////////////
+        //// Constoructors ////
+        ///////////////////////
 
         /// <summary>
         /// Defult Constructor for Product Screen: Used when creating a new product
@@ -28,8 +35,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
         {
             InitializeComponent();
             
-            //sets up screen
-            addProductSetup();
+            productScreenSetup(); //sets up screen
 
             idValue.Text = inventory.productIDGenerator().ToString(); //generates a unique idValue for new Products and sets it in textbox
         }
@@ -41,21 +47,10 @@ namespace MatthewEvans___BFM1___Software_I___C968
         public productScreen(Product product)
         {
             InitializeComponent();
-            
-            //sets up screen
-            addProductSetup();
 
-            modifyProduct = product; //setting modifyProduct to the product used in constructor
+            productScreenSetup(); //sets up screen
 
-
-            //sets data from the passed in modifyProduct object
-            idValue.Text = modifyProduct.ProductID.ToString();
-            nameValue.Text = 
-            inventoryValue.Text = modifyProduct.InStock.ToString();
-            priceCostValue.Text = modifyProduct.Price.ToString();
-            maxValue.Text = modifyProduct.Max.ToString();
-            minValue.Text = modifyProduct.Min.ToString();
-            partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts; //Setting display to copy of ModifyProduct Associated Parts list.
+            modifyProductScreenSetup(product); //sets data useing product as an argument
         }
         
         ////////////////
@@ -66,19 +61,9 @@ namespace MatthewEvans___BFM1___Software_I___C968
         private void allCandidateAddButton_Click(object sender, EventArgs e)
         {
             Part part = allCandidateDataGridView.CurrentRow.DataBoundItem as Part; //uses selection to create part object
-            Product modifyProductCopy = new Product(modifyProduct); //copy
 
-
-            if (modifyProduct.AssociatedParts == null) //checks to see if we are NOT modifying an existing entry
-            {
-                myProduct.addAssociatedPart(part); //adds part object to Associated Parts List
-                partsAssociatedDataGridView.DataSource = myProduct.AssociatedParts; //displays AssociatedParts list of new product
-            }
-            else
-            {
-                modifyProduct.addAssociatedPart(part); //adds part object to Associated Parts List of modifiedProduct
-                partsAssociatedDataGridView.DataSource = modifyProductCopy.AssociatedParts; //displays AssociatedParts list of modified product
-            }
+            modifyProduct.addAssociatedPart(part); //adds part object to Associated Parts List
+            partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts; //displays AssociatedParts list of new product
         }
 
         // Delete - AssociatedParts Button (Function: removes parts from the AssociatedParts list, but not from the AllParts list)
@@ -99,72 +84,65 @@ namespace MatthewEvans___BFM1___Software_I___C968
             }
             else
             {
-                myProduct.removeAssoicatedPart(part.PartID); //removes part on the myProduct.AssociatedParts
+                modifyProduct.removeAssoicatedPart(part.PartID); //removes part on the myProduct.AssociatedParts
             }
         }
 
-        //WORK IN PROGRESS
+        /// <summary>
+        /// function used to save (new and modified) products 
+        /// </summary>
         private void productSaveButton_Click(object sender, EventArgs e)
         {
-            if (modifyProduct.ProductID == 0) //checks to make sure we are not modifying an existing entry
+            try
             {
-                Product product = new Product
+                if (modifyProduct.ProductID == 0) //checks to make sure we are creating a new or existing entry (ture == new product)
                 {
-                    ProductID = int.Parse(idValue.Text),
-                    Name = nameValue.Text,
-                    InStock = int.Parse(inventoryValue.Text),
-                    Price = decimal.Parse(priceCostValue.Text),
-                    Max = int.Parse(maxValue.Text),
-                    Min = int.Parse(minValue.Text),
-                    AssociatedParts = partsAssociatedDataGridView.DataSource as BindingList<Part>
-                };
+                    Product product = new Product
+                    {
+                        ProductID = int.Parse(idValue.Text),
+                        Name = nameValue.Text,
+                        InStock = int.Parse(inventoryValue.Text),         //creates new prodcut useing the data from forms textboxes
+                        Price = decimal.Parse(priceCostValue.Text),
+                        Max = int.Parse(maxValue.Text),
+                        Min = int.Parse(minValue.Text),
+                        AssociatedParts = partsAssociatedDataGridView.DataSource as BindingList<Part>
+                    };
 
-                if (inventoryLogic(product) == 1)
-                {
-                    inventory.addProduct(product);
-                    this.Close();
-                }
-                else if (inventoryLogic(product) == 2)
-                {
-                    MessageBox.Show("Inventory Below Min Values");
-                }
-                else if (inventoryLogic(product) == 3)
-                {
-                    MessageBox.Show("Inventory Above Max Values");
+                    product.productValidation(product); //runs product validation to confirm product has good data
+
                 }
                 else
                 {
-                    MessageBox.Show("Error");
+                    modifyProduct.ProductID = int.Parse(idValue.Text);
+                    modifyProduct.Name = nameValue.Text;
+                    modifyProduct.InStock = int.Parse(inventoryValue.Text);    //updates preexisting product record
+                    modifyProduct.Price = decimal.Parse(priceCostValue.Text);
+                    modifyProduct.Max = int.Parse(maxValue.Text);
+                    modifyProduct.Min = int.Parse(minValue.Text);
+
+                    this.Close();
                 }
             }
-            else
+            catch (Exception) //exception captured incase bad data is able to be passed into a product creation, this error message should only tigger in a last case senerio
             {
-                modifyProduct.ProductID = int.Parse(idValue.Text);
-                modifyProduct.Name = nameValue.Text;
-                modifyProduct.InStock = int.Parse(inventoryValue.Text);
-                modifyProduct.Price = decimal.Parse(priceCostValue.Text);
-                modifyProduct.Max = int.Parse(maxValue.Text);
-                modifyProduct.Min = int.Parse(minValue.Text);
-                
-                this.Close();
+
+                MessageBox.Show("An Error has occured, please check your data and try again.");
             }
+        }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        private void productCancelButton_Click(object sender, EventArgs e)
+        {
+            modifyProduct.AssociatedParts = AssociatedPartsCopy; //returns a copy of the Associated Parts list that was created when the parts screen was created (so pre any modifications by the end user)
+            this.Close();
         }
 
         ///////////////
         //// Misc ////
         //////////////
-
-        //Form settings
-        private void addProductSetup()
-        {
-            allCandidateDataGridView.DataSource = Inventory.AllParts; //sets data for All Candidate Parts DataGrid
-            
-        }
-
  
-
         //clears inital selection on allCadidateDataGridView
         private void allCandidateDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -177,31 +155,40 @@ namespace MatthewEvans___BFM1___Software_I___C968
             partsAssociatedDataGridView.ClearSelection();
         }
 
-        private int inventoryLogic(Product product)
+        /// <summary>
+        /// Method used to set up productScreen (defualt)
+        /// </summary>
+        private void productScreenSetup()
         {
-            if (product.InStock <= product.Max && product.InStock >= product.Min)
-            {
-                return 1;
-            }
-            else if (product.InStock < product.Min)
-            {
-                return 2;
-            }
-            else if (product.InStock > product.Max)
-            {
-                return 3;
-            }
-            else
-            {
-                return 0;
-            }
+            allCandidateDataGridView.DataSource = Inventory.AllParts; //sets data for All Candidate Parts DataGrid
         }
 
-        //closes add product screen
-        private void productCancelButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Method used to setup productScreen (for modfiying existing prodcuts)
+        /// </summary>
+        /// <param name="prodcut"></param>
+        private void modifyProductScreenSetup(Product prodcut)
         {
-            
-            this.Close();
+            modifyProduct = prodcut; //setting modifyProduct to the product used in constructor
+
+            //sets data from the passed in modifyProduct object
+            idValue.Text = modifyProduct.ProductID.ToString();
+            nameValue.Text =
+            inventoryValue.Text = modifyProduct.InStock.ToString();
+            priceCostValue.Text = modifyProduct.Price.ToString();
+            maxValue.Text = modifyProduct.Max.ToString();
+            minValue.Text = modifyProduct.Min.ToString();
+            partsAssociatedDataGridView.DataSource = modifyProduct.AssociatedParts; //Setting display to copy of ModifyProduct Associated Parts list
+
+            if (prodcut.AssociatedParts != null) //checks to make sure the prodcut Associated Parts list is not empty
+            {
+                for (int i = 0; i < prodcut.AssociatedParts.Count; i++) //loops though Associated parts, and adds all parts to another list to be used if the product screen is closed before saving
+                {
+                    AssociatedPartsCopy.Add(prodcut.AssociatedParts[i]);
+                }
+            }
+ 
+            addProductLabel.Text = "Modify Product"; //changes the screen lable text to indicate the product is being modified
         }
     }
 }

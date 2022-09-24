@@ -22,7 +22,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         public int addedPartsCounter { get; set; }
         public BindingList<Part> AssociatedParts { get; set; }
 
-
         /// <summary>
         /// Defualt Constructor for Prodcut Object
         /// </summary>
@@ -30,7 +29,34 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         {
 
         }
- 
+
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        public Product(Product product)
+        {
+            ProductID = product.ProductID;
+            Name = product.Name;
+            Price = product.Price;
+            InStock = product.InStock;
+            Min = product.Min;
+            Max = product.Max;
+            AssociatedParts = product.AssociatedParts;
+        }
+
+        public Product DeepCopy()
+        {
+            Product product = new Product();
+            product = (Product)this.MemberwiseClone();
+            AssociatedPartsClass _associatedParts = new AssociatedPartsClass();
+            return product;
+        }
+
+        class AssociatedPartsClass
+        {
+            public BindingList<Part> AssociatedParts { get; set; }
+        }
+
 
         /// <summary>
         /// Constroctor for Product Object that has no AssociatedParts list
@@ -57,20 +83,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             this.Min = Min;
             this.Max = Max;
             this.AssociatedParts = AssociatedParts;
-        }
-
-        /// <summary>
-        /// Copy Constructor
-        /// </summary>
-        public Product(Product product)
-        {
-            this.ProductID = product.ProductID;
-            this.Name = product.Name;
-            this.Price = product.Price;
-            this.InStock = product.InStock;
-            this.Min = product.Min;
-            this.Max = product.Max;
-            this.AssociatedParts = product.AssociatedParts;
         }
 
         /// <summary>
@@ -155,16 +167,16 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         }
 
         /// <summary>
-        /// WORK IN PROGRESS
+        /// Method used to validate product data
         /// </summary>
-        /// <returns></returns>
-        public bool inventoryLogic(Part part)
+        /// <returns> bool </returns>
+        public bool productValidation(Product product) //takes product to be validated as argument
         {
-            if (minInstockMax(part) == false)
+            if (minGraterThanMax(product) == false) //first checks to see if the products min value is grater than the instock value
             {
-                if (minGraterThanInstock(part) == false)
+                if (minGraterThanInstock(product) == false) //then checks to see if the min is grater than the instock
                 {
-                    if (maxLessthanInstock(part) == false)
+                    if (maxLessthanInstock(product) == false) //finally checks to see if the max is less than the instock
                     {
                         return true;
                     }
@@ -175,9 +187,14 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             return false;
         }
 
-        public bool minInstockMax(Part part)
+        /// <summary>
+        /// Method used to determin if a products "Min" value is grater than the "Max" value
+        /// </summary>
+        /// <param name="product"> product to be evaluated </param>
+        /// <returns> bool </returns>
+        public bool minGraterThanMax(Product product)
         {
-            if (part.Min > part.Max)
+            if (product.Min > product.Max)
             {
                 MessageBox.Show($"Alright, you need to take a min, because what you enterend made no sence. The Min is grater than the max???? Are you drunk?");
                 return true;
@@ -185,21 +202,31 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             return false;
         }
 
-        public bool minGraterThanInstock(Part part)
+        /// <summary>
+        /// Method used to determin if a produts "Min" is greater than the "Instock" value
+        /// </summary>
+        /// <param name="product"> prodcut to be evaluated </param>
+        /// <returns> bool </returns>
+        public bool minGraterThanInstock(Product product)
         {
-            if (part.Min > part.InStock)
+            if (product.Min > product.InStock)
             {
-                MessageBox.Show($"Amount Instock for {part.Name} is less than the allowed Minimum");
+                MessageBox.Show($"Amount Instock for {product.Name} is less than the allowed Minimum");
                 return true;
             }
             return false;
         }
 
-        public bool maxLessthanInstock(Part part)
+        /// <summary>
+        /// Method used to detmine if a products "Max" value is less than the "Instock" value
+        /// </summary>
+        /// <param name="product"> product to be evaluated </param>
+        /// <returns> bool </returns>
+        public bool maxLessthanInstock(Product product)
         {
-            if (part.Max < part.InStock)
+            if (product.Max < product.InStock)
             {
-                MessageBox.Show($"Amount Instock for {part.Name} is greater than the allowed Maximum");
+                MessageBox.Show($"Amount Instock for {product.Name} is greater than the allowed Maximum");
                 return true;
             }
             return false;

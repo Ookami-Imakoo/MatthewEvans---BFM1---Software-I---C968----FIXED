@@ -265,7 +265,7 @@
             this.idValue.Size = new System.Drawing.Size(180, 35);
             this.idValue.TabIndex = 48;
             // 
-            // AddProduct
+            // productScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -296,7 +296,7 @@
             this.Controls.Add(this.addProductLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.Name = "AddProduct";
+            this.Name = "productScreen";
             this.Text = "AddProduct";
             ((System.ComponentModel.ISupportInitialize)(this.allCandidateDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsAssociatedDataGridView)).EndInit();
