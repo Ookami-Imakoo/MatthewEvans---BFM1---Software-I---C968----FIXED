@@ -44,7 +44,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
         ////////////////
         /// Buttons ///
         ///////////////
-
         private void saveButton_Click(object sender, EventArgs e)
         {
             inventoryLogicTest();
@@ -124,7 +123,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
         {
             saveButton.Enabled = false;
         }
-
         /// <summary>
         /// Used to set up Parts Page when modifying an existing part
         /// </summary>
@@ -140,10 +138,10 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 //shows Machine ID Label/Value and hides Company Name Label/Value
                 modifyPartScreen.machineIDLabel.Show();
                 modifyPartScreen.machineIDValue.Show();
-                modifyPartScreen.modifyPartLabel.Show();
+                modifyPartScreen.addPartLabel.Text = "Modify Part";
+                modifyPartScreen.addPartLabel.Show();
                 modifyPartScreen.companyNameLabel.Hide();
                 modifyPartScreen.companyNameValue.Hide();
-                modifyPartScreen.addPartLabel.Hide();
 
                 Inhouse inhouse = part as Inhouse; //sets passed in part as an Inhouse object
                 modifyPartScreen.machineIDValue.Text = inhouse.MachineID.ToString(); //used that object to pass in MachineID
@@ -156,10 +154,10 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 //shows Machine ID Label/Value and hides Company Name Label/Value
                 modifyPartScreen.companyNameLabel.Show();
                 modifyPartScreen.companyNameValue.Show();
-                modifyPartScreen.modifyPartLabel.Show();
+                modifyPartScreen.addPartLabel.Text = "Modify Part";
+                modifyPartScreen.addPartLabel.Show();
                 modifyPartScreen.machineIDLabel.Hide();
                 modifyPartScreen.machineIDValue.Hide();
-                modifyPartScreen.addPartLabel.Hide();
 
                 Outsourced outsourced = part as Outsourced; //sets passed in part as an Outsourced object
                 modifyPartScreen.companyNameValue.Text = outsourced.CompanyName.ToString(); //used that object to pass in company name value
@@ -173,8 +171,6 @@ namespace MatthewEvans___BFM1___Software_I___C968
             modifyPartScreen.maxValue.Text = part.Max.ToString();
             modifyPartScreen.minValue.Text = part.Min.ToString();
         }
-
-
         /// <summary>
         /// Method for confirming that the input data form the end user will create a good part before creating the part and adding it to the allparts list
         /// </summary>
@@ -182,11 +178,9 @@ namespace MatthewEvans___BFM1___Software_I___C968
         {
             if (inhouseRadioButton.Checked == true) //checks to see if the inhouse radio button is checked or not, indicating the part is to be an inhouse part
             {
-
                 try //first trys to create the part withe the passed in data from the Parts Screen
                 {
                     Inhouse inhouse = new Inhouse(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), Int32.Parse(machineIDValue.Text)); //initialzes a new part with the data put in by the user
-
                     if (inventory.checkExistence(inhouse) == true) //checks to see if the part already exists
                     {
                         if (inventory.inventoryLogic(inhouse) == true) //confirms that the part conforms to the classes restrictions
@@ -206,14 +200,12 @@ namespace MatthewEvans___BFM1___Software_I___C968
                     partVerification(); //Method that adds notifications to the part screen to help the user correct input errors
                     MessageBox.Show("Please check all data was entered correctly and then try again.");
                 }
-
             }
             else if (outsourcedRadioButton.Checked == true) //checks to see if the outsourced radio button is checked or not, indicating the part is to be an outsourced part
             {
                 try
                 {
                     Outsourced outsourced = new Outsourced(int.Parse(idValue.Text), nameValue.Text, decimal.Parse(priceCostValue.Text), Int32.Parse(inventoryValue.Text), Int32.Parse(minValue.Text), Int32.Parse(maxValue.Text), companyNameValue.Text); //initialzes a new part with the data put in by the user
-
                     if (inventory.checkExistence(outsourced) == true) //checks to see if the part already exists
                     {
                         if (inventory.inventoryLogic(outsourced) == true) //confirms that the part conforms to the classes restrictions
@@ -230,13 +222,11 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 }
                 catch (Exception)
                 {
-
                     partVerification(); //Method that adds notifications to the part screen to help the user correct input errors
                     MessageBox.Show("Please check all data was entered correctly and then try again.");
                 }
             }
         }
-
         /// <summary>
         /// Method for validateing part information and returns useful messages to help end user input proper data
         /// </summary>

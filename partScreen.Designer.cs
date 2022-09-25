@@ -49,7 +49,6 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.companyNameValue = new System.Windows.Forms.TextBox();
             this.companyNameLabel = new System.Windows.Forms.Label();
-            this.modifyPartLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // addPartLabel
@@ -250,23 +249,12 @@
             this.companyNameLabel.TabIndex = 19;
             this.companyNameLabel.Text = "Company Name";
             // 
-            // modifyPartLabel
-            // 
-            this.modifyPartLabel.AutoSize = true;
-            this.modifyPartLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.modifyPartLabel.Location = new System.Drawing.Point(12, 9);
-            this.modifyPartLabel.Name = "modifyPartLabel";
-            this.modifyPartLabel.Size = new System.Drawing.Size(130, 30);
-            this.modifyPartLabel.TabIndex = 21;
-            this.modifyPartLabel.Text = "Modify Part";
-            // 
             // partScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(558, 544);
-            this.Controls.Add(this.modifyPartLabel);
             this.Controls.Add(this.companyNameValue);
             this.Controls.Add(this.companyNameLabel);
             this.Controls.Add(this.cancelButton);
@@ -320,6 +308,5 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.TextBox companyNameValue;
         private System.Windows.Forms.Label companyNameLabel;
-        private System.Windows.Forms.Label modifyPartLabel;
     }
 }
