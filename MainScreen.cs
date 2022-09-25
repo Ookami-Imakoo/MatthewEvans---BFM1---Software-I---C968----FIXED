@@ -125,90 +125,14 @@ namespace MatthewEvans___BFM1___Software_I___C968
         //takes input from search text box and returns a message if found or not
         private void partsSearchButton_Click(object sender, EventArgs e)
         {
-            String searchInput = partsSearchValue.Text;
-
-            if (Regex.IsMatch(searchInput, @"^\d+$"))
-            {
-               Part searchedPart = inventory.lookupPart(Int32.Parse(searchInput));
-            }
-            //else
-            //{
-            //    Part verifyPart = inventory.lookupPart(searchInput);
-
-
-
-
-
-                
-
-
-
-                ///*Assigns search textbox value to string variable and uses
-
-                //    * Regex to match any value entered by the user to the data
-
-                //    * in the DataGridView. Clears value when done and highlights
-
-                //    * row that matches. Calls lookupPart to verify that Part exists.*/
-
-
-
-                //string searchValue = partsSearchValue.Text;
-
-
-
-                //foreach (DataGridViewRow row in partsDataGridView.Rows)
-
-                //{
-
-                //    if (searchValue == "")
-
-                //    {
-
-                //        break;
-
-                //    }
-
-                //    else if (Regex.IsMatch(row.Cells[1].Value.ToString(), Regex.Escape(searchValue.ToString()), RegexOptions.IgnoreCase))
-
-                //    {
-
-                //        Part verifyName = Inventory.lookupPart(Int32.Parse(row.Cells[0].Value.ToString()));
-
-                //        Regex.IsMatch((verifyName.Name), Regex.Escape(verifyName.Name), RegexOptions.IgnoreCase);
-
-
-
-                //        row.Selected = true;
-
-                //        PartsGridView2.DefaultCellStyle.SelectionBackColor = Color.Yellow;
-
-                //        PartsGridView2.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-                //        SearchCandPartsBox.Clear();
-
-                //        break;
-
-                //    }
-
-                //}
-
-            }
+            searchDataGrid(partsSearchValue.Text, partsDataGridView);
+        }
 
         //Product - Search Button
         //takes input from search text box and returns a message if found or not
         private void productsSearchButton_Click(object sender, EventArgs e)
         {
-            String searchInput = productsSearchValue.Text;
-
-            if (Regex.IsMatch(searchInput, @"^\d+$"))
-            {
-                inventory.lookupProudct(Int32.Parse(searchInput));
-            }
-            else
-            {
-                inventory.lookupProudct(searchInput);
-            }
+            searchDataGrid(productsSearchValue.Text, productsDataGridView);
         }
 
         //MainScreen - EXIT Button
@@ -284,6 +208,121 @@ namespace MatthewEvans___BFM1___Software_I___C968
                 setupData++; // used for logic to only set sample data once
             }
             
+        }
+
+        /// <summary>
+        /// function for searching the All Cadidates DataGrid useing an argument (string input)
+        /// </summary>
+        /// <param name="search"> string veriable used as the search comparison object </param>
+        private void searchDataGrid(string search, DataGridView dataGrid)
+        {
+            for (int i = 0; i < dataGrid.Rows.Count; i++)
+            {
+                if (search != "" && int.TryParse(search, out int result) == true) //checks to make sure the search string is not empty, and then tries to see if it cna be parsed into an integer
+                {
+                    try
+                    {
+                        if (inventory.checkExistence(int.Parse(search)) == true) //checks to make sure that the search input exists in the list
+                        {
+                            integerSearch(search, i, dataGrid); //runs the integerSearch function that hides all rows that do not match the partID of the search string
+                        }
+                        else //if the string input (part number) dose not exist then...
+                        {
+                            MessageBox.Show($"No part with the id: \"{search}\" was found. Please check your spelling and try again.");
+                            break;
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show($"An Error has occured, please remove your search data and try again. If the issue continues please close the application and reopen.");
+                    }
+
+                }
+                else //if the search string can not be parsed into an integer (ie. its a string)
+                {
+                    try
+                    {
+                        if (inventory.checkExistence(search) == true) //checks to see if the part exists in the AllParts list
+                        {
+                            stringSearch(search, i, dataGrid); //runs the stringSearch function that hides all rows that do not math the part that is being searched
+                            continue; //continues the for loop
+                        }
+                        else //if the part dose not exist in the AllParts list
+                        {
+                            MessageBox.Show($"No part with the name \"{search}\" was found. Please check your spelling and try again.");
+                            break;
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show($"An Error has occured, please remove your search data and try again. If the issue continues please close the application and reopen.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function for searching and manipulateing the allCandidatesDataGridView based on the Name of the Part
+        /// </summary>
+        /// <param name="inputString"> veriable to hold the search parameter, input by the user in the allCandidateSearchValue textbox</param>
+        /// <param name="i"> integer indicating the iteration of the forloop in the parent function</param>
+        private void stringSearch(String inputString, int i, DataGridView dataGrid)
+        {
+            if (inputString == Inventory.AllParts[i].Name) //checks if the inputString is the same as the current parts name 
+            {
+                dataGrid.Rows[i].Visible = true; //if so it will make sure that row containg the part stays visable, or makes it viable once again if it was already invisable
+            }
+            else
+            {
+                CurrencyManager currencyManager = (CurrencyManager)BindingContext[dataGrid.DataSource]; //no idea what this is doing, but it fixed my exeption I was getting XD
+                currencyManager.SuspendBinding();
+                dataGrid.Rows[i].Visible = false; //sets rows that do not match teh inputString to be invisable
+                currencyManager.ResumeBinding();
+            }
+        }
+
+        /// <summary>
+        /// Function for seaching and manipulateing the allCandidatesDataGridView based on the Part ID
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <param name="i"></param>
+        private void integerSearch(String inputString, int i, DataGridView dataGrid)
+        {
+            if (int.Parse(inputString) == Inventory.AllParts[i].PartID) //checks to see if the inputString match the part ID of the part in the list
+            {
+                dataGrid.Rows[i].Visible = true; //if so it will make sure that row containg the part stays visable, or makes it viable once again if it was already invisable
+            }
+            else
+            {
+                CurrencyManager currencyManager = (CurrencyManager)BindingContext[dataGrid.DataSource]; //same as above, I have no idea what this is doing XD but it fixes my issue, added it to the google list for later consumption
+                currencyManager.SuspendBinding();
+                dataGrid.Rows[i].Visible = false;//sets rows that do not match teh inputString to be invisable
+                currencyManager.ResumeBinding();
+            }
+        }
+
+        private void partsSearchValue_TextChanged(object sender, EventArgs e)
+        {
+            if (partsSearchValue.Text == "") //checks to see if the content of the allCandidateSeachValue textbox is an empty string
+            {
+                for (int i = 0; i < Inventory.AllParts.Count; i++)
+                {
+                    partsDataGridView.Rows[i].Visible = true; //sets all rows in the datagrid to being visable
+                }
+            }
+        }
+
+        private void productsSearchValue_TextChanged(object sender, EventArgs e)
+        {
+            if (productsSearchValue.Text == "") //checks to see if the content of the allCandidateSeachValue textbox is an empty string
+            {
+                for (int i = 0; i < productsDataGridView.Rows.Count; i++)
+                {
+                    productsDataGridView.Rows[i].Visible = true; //sets all rows in the datagrid to being visable
+                }
+            }
         }
     }
 }

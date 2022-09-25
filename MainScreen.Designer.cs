@@ -86,6 +86,7 @@
             this.partsSearchValue.Name = "partsSearchValue";
             this.partsSearchValue.Size = new System.Drawing.Size(264, 35);
             this.partsSearchValue.TabIndex = 3;
+            this.partsSearchValue.TextChanged += new System.EventHandler(this.partsSearchValue_TextChanged);
             // 
             // partsLabel
             // 
@@ -173,6 +174,7 @@
             this.productsSearchValue.Name = "productsSearchValue";
             this.productsSearchValue.Size = new System.Drawing.Size(264, 35);
             this.productsSearchValue.TabIndex = 10;
+            this.productsSearchValue.TextChanged += new System.EventHandler(this.productsSearchValue_TextChanged);
             // 
             // productsSearchButton
             // 

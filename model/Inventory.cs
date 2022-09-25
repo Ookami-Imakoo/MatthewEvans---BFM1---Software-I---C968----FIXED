@@ -382,6 +382,18 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             return false;
         }
 
+        public bool checkExistence(String name)
+        {
+            for (int i = 0; i < AllParts.Count; i++)
+            {
+                if (name == AllParts[i].Name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool minInstockMax(Part part)
         {
             if (part.Min > part.Max)
