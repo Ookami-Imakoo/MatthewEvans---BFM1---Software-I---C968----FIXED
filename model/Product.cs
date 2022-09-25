@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
+using System.Windows.Forms;
+
 namespace MatthewEvans___BFM1___Software_I___C968.model
 {
     public class Product
@@ -19,17 +19,16 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         public int InStock { get; set; }
         public int Min { get; set; }
         public int Max { get; set; }
-        public int addedPartsCounter { get; set; }
-        public BindingList<Part> AssociatedParts { get; set; }
-
+        public BindingList<Part> AssociatedParts { get; set; }
+
         /// <summary>
         /// Defualt Constructor for Prodcut Object
-        /// </summary>
+        /// </summary>
         public Product()
         {
 
-        }
-
+        }
+
         /// <summary>
         /// Copy Constructor
         /// </summary>
@@ -40,24 +39,10 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             Price = product.Price;
             InStock = product.InStock;
             Min = product.Min;
-            Max = product.Max;
-            AssociatedParts = product.AssociatedParts;
+            Max = product.Max;
+            AssociatedParts = product.AssociatedParts;
         }
-
-        public Product DeepCopy()
-        {
-            Product product = new Product();
-            product = (Product)this.MemberwiseClone();
-            AssociatedPartsClass _associatedParts = new AssociatedPartsClass();
-            return product;
-        }
-
-        class AssociatedPartsClass
-        {
-            public BindingList<Part> AssociatedParts { get; set; }
-        }
-
-
+
         /// <summary>
         /// Constroctor for Product Object that has no AssociatedParts list
         /// </summary>
@@ -99,13 +84,11 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             else if (checkExistence(myPart) == false) //if an Associated Parts list already exists, and the part has not already been added
             {
                 AssociatedParts.Add(myPart); //adds part to AssociatedParts list
-                addedPartsCounter++; //increments counter used in cancel button logic
             }
             else
             {
                 MessageBox.Show("You can not add duplicate parts."); // messaged returned if the part the user is adding already exists in the list
             }
-
         }
 
         /// <summary>
@@ -131,9 +114,13 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                 }
             }
             return false; //returning flase if part was not removed
-        
         }
 
+        /// <summary>
+        /// Made because the UML document demanded it, but not refrenced at all
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public Part lookupAssoicatedPart(int x)
         {
             for (int i = 0; i < AssociatedParts.Count; i++)
@@ -162,10 +149,8 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                     }
                 }
             }
-            
             return false; //returns false if AssociatedParts list is null
-        }
-
+        }
         /// <summary>
         /// Method used to validate product data
         /// </summary>
@@ -207,7 +192,7 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         /// </summary>
         /// <param name="product"> prodcut to be evaluated </param>
         /// <returns> bool </returns>
-        public bool minGraterThanInstock(Product product)
+        public bool minGraterThanInstock(Product product)
         {
             if (product.Min > product.InStock)
             {
@@ -230,7 +215,5 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                 return true;
             }
             return false;
-        }
-
-    }
+        }    }
 }

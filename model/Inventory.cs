@@ -66,8 +66,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                     AllParts.Add(part);
                 }
             }
-            
-            
         }
 
         /// <summary>
@@ -364,7 +362,19 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         {
             for (int i = 0; i < AllParts.Count; i++)
             {
-                if (AllParts[i].PartID == part.PartID)
+                if (part == AllParts[i])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool checkExistence(int partId)
+        {
+            for (int i = 0; i < AllParts.Count; i++)
+            {
+                if (partId == AllParts[i].PartID)
                 {
                     return true;
                 }

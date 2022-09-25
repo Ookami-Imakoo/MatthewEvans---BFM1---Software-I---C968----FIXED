@@ -87,19 +87,21 @@
             // 
             // allCandidateSearchValue
             // 
-            this.allCandidateSearchValue.Location = new System.Drawing.Point(1068, 80);
+            this.allCandidateSearchValue.Location = new System.Drawing.Point(1171, 80);
             this.allCandidateSearchValue.Name = "allCandidateSearchValue";
-            this.allCandidateSearchValue.Size = new System.Drawing.Size(362, 35);
+            this.allCandidateSearchValue.Size = new System.Drawing.Size(259, 35);
             this.allCandidateSearchValue.TabIndex = 10;
+            this.allCandidateSearchValue.TextChanged += new System.EventHandler(this.allCandidateSearchValue_TextChanged);
             // 
             // allCandidateSearchButton
             // 
-            this.allCandidateSearchButton.Location = new System.Drawing.Point(972, 78);
+            this.allCandidateSearchButton.Location = new System.Drawing.Point(1075, 78);
             this.allCandidateSearchButton.Name = "allCandidateSearchButton";
             this.allCandidateSearchButton.Size = new System.Drawing.Size(90, 40);
             this.allCandidateSearchButton.TabIndex = 9;
             this.allCandidateSearchButton.Text = "Search";
             this.allCandidateSearchButton.UseVisualStyleBackColor = true;
+            this.allCandidateSearchButton.Click += new System.EventHandler(this.allCandidateSearchButton_Click);
             // 
             // allCandidateDataGridView
             // 
@@ -329,6 +331,6 @@
         private System.Windows.Forms.TextBox nameValue;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label idLabel;
-        private System.Windows.Forms.TextBox idValue;
+        private System.Windows.Forms.TextBox idValue;
     }
 }
