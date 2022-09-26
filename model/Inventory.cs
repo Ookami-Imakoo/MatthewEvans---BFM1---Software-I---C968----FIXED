@@ -56,11 +56,11 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         /// and deleteing the part if found, and replaceing it with the Part provided. </summary>
         /// <param name="x"> Represents the part number wished to be replaced. </param>
         /// <param name="myPart"> Represents the part to be placed in the list after the removal of the old data. </param>
-        public void updatePart(int x, Part part)
+        public void updatePart(int partPartID, Part part)
         {
             for (int i = 0; i < AllParts.Count; i++)
             {
-                if(AllParts[i].PartID == x)
+                if(AllParts[i].PartID == partPartID)
                 {
                     AllParts.Remove(AllParts[i]);
                     AllParts.Add(part);
@@ -87,20 +87,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                 return true;
             }
             return false;
-
-            /*
-            for (int i = 0 ; i < AllParts.Count ; i++)
-            {
-                if (myPart != AllParts[i])
-                {
-                    continue;
-                }
-                AllParts.RemoveAt(i);
-                return true;
-
-            }
-            return false;
-            */
         }
 
         /// <summary>
@@ -362,7 +348,7 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         {
             for (int i = 0; i < AllParts.Count; i++)
             {
-                if (part == AllParts[i])
+                if (part.PartID == AllParts[i].PartID)
                 {
                     return true;
                 }
