@@ -125,6 +125,8 @@ namespace MatthewEvans___BFM1___Software_I___C968
                     modifyProduct.Max = int.Parse(maxValue.Text);
                     modifyProduct.Min = int.Parse(minValue.Text);
 
+                    inventory.updateProduct(modifyProduct.ProductID, modifyProduct); 
+                    
                     this.Close();
                 }
             }

@@ -196,6 +196,8 @@
             this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.productsDataGridView.Size = new System.Drawing.Size(622, 319);
             this.productsDataGridView.TabIndex = 8;
+            this.productsDataGridView.DataSourceChanged += new System.EventHandler(this.productsDataGridView_DataSourceChanged);
+            this.productsDataGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.productsDataGridView_DataBindingComplete);
             // 
             // exitButton
             // 

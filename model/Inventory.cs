@@ -43,6 +43,23 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         }
 
         /// <summary>
+        /// Function for updateing products when a modifyed product screen is saved
+        /// </summary>
+        /// <param name="productID"> product ID from the modifed Product </param>
+        /// <param name="product"> Product object to be modified </param>
+        public void updateProduct(int productID, Product product)
+        {
+            for (int i = 0; i < Products.Count; i++)
+            {
+                if (Products[i].ProductID == productID)
+                {
+                    Products.Remove(Products[i]);
+                    Products.Add(product);
+                }
+            }
+        }
+
+        /// <summary>
         /// Represents a function that adds a Part to the All Parts list.
         /// </summary>
         /// <param name=""> Represents a part to be addded to the All Parts list. </param>

@@ -38,6 +38,9 @@ namespace MatthewEvans___BFM1___Software_I___C968
         private void partsDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             partsDataGridView.ClearSelection();
+        }
+        private void productsDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
             productsDataGridView.ClearSelection();
         }
 
@@ -323,6 +326,11 @@ namespace MatthewEvans___BFM1___Software_I___C968
                     productsDataGridView.Rows[i].Visible = true; //sets all rows in the datagrid to being visable
                 }
             }
+        }
+
+        private void productsDataGridView_DataSourceChanged(object sender, EventArgs e)
+        {
+            productsDataGridView.ResetBindings();
         }
     }
 }
