@@ -109,7 +109,11 @@ namespace MatthewEvans___BFM1___Software_I___C968
                         AssociatedParts = partsAssociatedDataGridView.DataSource as BindingList<Part>
                     };
 
-                    product.productValidation(product); //runs product validation to confirm product has good data
+                    if (product.productValidation(product) == true) //runs product validation to confirm product has good data
+                    {
+                        inventory.addProduct(product);
+                        this.Close();
+                    }
 
                 }
                 else
@@ -182,7 +186,7 @@ namespace MatthewEvans___BFM1___Software_I___C968
 
             //sets data from the passed in modifyProduct object
             idValue.Text = modifyProduct.ProductID.ToString();
-            nameValue.Text =
+            nameValue.Text = modifyProduct.Name;
             inventoryValue.Text = modifyProduct.InStock.ToString();
             priceCostValue.Text = modifyProduct.Price.ToString();
             maxValue.Text = modifyProduct.Max.ToString();
