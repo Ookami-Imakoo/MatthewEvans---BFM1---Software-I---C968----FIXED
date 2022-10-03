@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
+using System.Windows.Forms;
+
+
+
 namespace MatthewEvans___BFM1___Software_I___C968.model
 {
     public class Product
@@ -19,16 +21,21 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         public int InStock { get; set; }
         public int Min { get; set; }
         public int Max { get; set; }
-        public BindingList<Part> AssociatedParts { get; set; }
-
+        public BindingList<Part> AssociatedParts { get; set; }
+
+
+
         /// <summary>
         /// Defualt Constructor for Prodcut Object
-        /// </summary>
+        /// </summary>
+
         public Product()
         {
 
-        }
-
+        }
+
+
+
         /// <summary>
         /// Copy Constructor
         /// </summary>
@@ -39,10 +46,13 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
             Price = product.Price;
             InStock = product.InStock;
             Min = product.Min;
-            Max = product.Max;
-            AssociatedParts = product.AssociatedParts;
+            Max = product.Max;
+
+            AssociatedParts = product.AssociatedParts;
+
         }
-
+
+
         /// <summary>
         /// Constroctor for Product Object that has no AssociatedParts list
         /// </summary>
@@ -150,7 +160,8 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                 }
             }
             return false; //returns false if AssociatedParts list is null
-        }
+        }
+
         /// <summary>
         /// Method used to validate product data
         /// </summary>
@@ -192,7 +203,8 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
         /// </summary>
         /// <param name="product"> prodcut to be evaluated </param>
         /// <returns> bool </returns>
-        public bool minGraterThanInstock(Product product)
+        public bool minGraterThanInstock(Product product)
+
         {
             if (product.Min > product.InStock)
             {
@@ -215,5 +227,6 @@ namespace MatthewEvans___BFM1___Software_I___C968.model
                 return true;
             }
             return false;
-        }    }
+        }
+    }
 }
